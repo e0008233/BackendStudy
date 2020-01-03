@@ -1,6 +1,8 @@
-import dp.number5.Solution;
+import dp.number91.Solution;
+
 public class main {
     public static void main(String[] args){
-        System.out.println(Solution.longestPalindrome("abaaa"));
+
+        System.out.println(Solution.numDecodings("226"));
     }
 }
