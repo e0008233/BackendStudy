@@ -64,15 +64,15 @@ ConcurrentLinkedQueue queue = new ConcurrentLinkedQueue();
 1和2的区别是，调用方在得到返回之前所做的事情不一行。 1和3的区别是，被调用方对于烧水的处理不一样。
 
 ***
-Final methods cannot be overridden.
+Final methods cannot be overridden.   
 Final class cannot be subclassed. 
 
 ***
-Static methods and variables can be accessed without objects/instances
+Static methods and variables can be accessed without objects/instances   
 Only inner class can be static
 
 ***
-Abstract class vs Interface
+Abstract class vs Interface  
 Abstraction: Hiding the internal implementation of the feature and only showing the functionality to the users. i.e. what it works (showing), how it works (hiding). Both abstract class and interface are used for abstraction.
 
 - Type of methods: Interface can have only abstract methods. Abstract class can have abstract and non-abstract methods. From Java 8, it can have default and static methods also.
