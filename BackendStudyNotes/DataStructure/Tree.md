@@ -28,4 +28,4 @@ Right rotation:
 Red–black trees offer worst-case guarantees for insertion time, deletion time, and search time.
 ![Alt text](images/Tree_blackRedTree_efficiency.png?raw=true "methods") 
 
-
+Link: https://blog.csdn.net/sun_tttt/article/details/65445754
