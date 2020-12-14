@@ -28,4 +28,30 @@ Right rotation:
 Red–black trees offer worst-case guarantees for insertion time, deletion time, and search time.
 ![Alt text](images/Tree_blackRedTree_efficiency.png?raw=true "methods") 
 
+
+2-3 tree:  
+
+Youtube link: https://www.youtube.com/c/DavidTaylorSJSU/videos  
+
+a 2–3 tree is a tree data structure, where every node with children (internal node) has either two children (2-node) and one data element or three children (3-nodes) and two data elements. A 2-3 tree is a B-tree of order 3. Nodes on the outside of the tree (leaf nodes) have no children and one or two data elements.  
+
+We say that an internal node is a 2-node if it has one data element and two children.  
+![Alt text](images/2node.png?raw=true "methods")  
+ 
+We say that an internal node is a 3-node if it has two data elements and three children.   
+![Alt text](images/3node.png?raw=true "methods")  
+
+We say that T is a 2–3 tree if and only if one of the following statements hold:[5]
+
+- T is empty. In other words, T does not have any nodes.
+- T is a 2-node with data element a. If T has left child p and right child q, then  
+  - p and q are non-empty 2–3 trees of the same height;
+  - a is greater than each element in p; and  
+  - a is less than or equal to each data element in q.  
+- T is a 3-node with data elements a and b, where a < b. If T has left child p, middle child q, and right child r, then  
+  - p, q, and r are non-empty 2–3 trees of equal height;  
+  - a is greater than each data element in p and less than or equal to each data element in q; and  
+  - b is greater than each data element in q and less than or equal to each data element in r.  
+
+
 Link: https://blog.csdn.net/sun_tttt/article/details/65445754
