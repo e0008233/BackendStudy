@@ -53,5 +53,16 @@ We say that T is a 2–3 tree if and only if one of the following statements hol
   - a is greater than each data element in p and less than or equal to each data element in q; and  
   - b is greater than each data element in q and less than or equal to each data element in r.  
 
+2-3 tree keeps a fairly simple balancing mechanism  
+O(lg n) performance
+
+***
+- Degree represents the lower bound on the number of children a node in the B Tree can have (except for the root). i.e the minimum number of children possible. 
+- Whereas the Order represents the upper bound on the number of children. ie. the maximum number possible.
+
+***
+Disks are slow, with two performance measures:
+- Latency (seek time): how long to get your first bit of data
+- Throughput (transfer rate): how quick once started
 
 Link: https://blog.csdn.net/sun_tttt/article/details/65445754
