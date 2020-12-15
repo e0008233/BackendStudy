@@ -66,3 +66,16 @@ Disks are slow, with two performance measures:
 - Throughput (transfer rate): how quick once started
 
 Link: https://blog.csdn.net/sun_tttt/article/details/65445754
+
+***
+B-Tree:  
+B-Tree is known as a self-balancing tree as its nodes are sorted in the inorder traversal. In B-tree, a node can have more than two children. B-tree has a height of logM N (Where ‘M’ is the order of tree and N is the number of nodes). And the height is adjusted automatically at each update. In the B-tree data is sorted in a specific order, with the lowest value on the left and the highest value on the right. To insert the data or key in B-tree is more complicated than a binary tree.
+There are some conditions that must be hold by the B-Tree:  
+- All the leaf nodes of the B-tree must be at the same level.
+- Above the leaf nodes of the B-tree, there should be no empty sub-trees.
+- B- tree’s height should lie as low as possible.  
+![Alt text](images/b_tree.png?raw=true "methods")  
+
+B+ Tree:  
+B+ tree eliminates the drawback B-tree used for indexing by <b>storing data pointers only at the leaf nodes of the tree</b>. Thus, the structure of leaf nodes of a B+ tree is quite different from the structure of internal nodes of the B tree. It may be noted here that, since data pointers are present only at the leaf nodes, the leaf nodes must necessarily store all the key values along with their corresponding data pointers to the disk file block, in order to access them. Moreover, the leaf nodes are linked to providing ordered access to the records. The leaf nodes, therefore form the first level of the index, with the internal nodes forming the other levels of a multilevel index. Some of the key values of the leaf nodes also appear in the internal nodes, to simply act as a medium to control the searching of a record.
+![Alt text](images/bplus.png?raw=true "methods") 
