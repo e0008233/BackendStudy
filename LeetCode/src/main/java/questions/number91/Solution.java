@@ -1,4 +1,4 @@
-package dp.number91;
+package questions.number91;
 
 public  class Solution {
     public int numDecodings(String s) {

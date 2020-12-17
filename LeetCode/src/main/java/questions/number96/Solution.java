@@ -1,6 +1,5 @@
-package dp.number96;
+package questions.number96;
 
-import java.util.HashMap;
 //Catalan number
 //dp[2] =  dp[0] * dp[1]　　　(1为根的情况，则左子树一定不存在，右子树可以有一个数字)
 //

@@ -1,4 +1,4 @@
-package dp.number95;
+package questions.number95;
 
 public class TreeNode {
     int val;
