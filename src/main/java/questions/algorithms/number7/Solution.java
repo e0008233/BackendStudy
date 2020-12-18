@@ -1,4 +1,4 @@
-package questions.number7;
+package questions.algorithms.number7;
 
 public class Solution {
     public static int reverse(int x) {

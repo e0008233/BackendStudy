@@ -1,4 +1,4 @@
-package questions.number95;
+package questions.algorithms.number95;
 
 import java.util.ArrayList;
 import java.util.HashMap;

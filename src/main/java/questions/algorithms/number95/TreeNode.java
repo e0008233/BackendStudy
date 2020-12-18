@@ -1,4 +1,4 @@
-package questions.number95;
+package questions.algorithms.number95;
 
 public class TreeNode {
     int val;

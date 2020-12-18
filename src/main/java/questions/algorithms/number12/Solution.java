@@ -1,4 +1,4 @@
-package questions.number12;
+package questions.algorithms.number12;
 
 public class Solution {
     public String intToRoman(int num) {

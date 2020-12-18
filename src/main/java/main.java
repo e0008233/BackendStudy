@@ -1,4 +1,4 @@
-import questions.number7.Solution;
+import questions.algorithms.number7.Solution;
 
 public class main {
     public static void main(String[] args){

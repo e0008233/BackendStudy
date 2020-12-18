@@ -1,4 +1,4 @@
-package questions.number5;
+package questions.algorithms.number5;
 
 public class Solution2 {
     public static String longestPalindrome(String s) {

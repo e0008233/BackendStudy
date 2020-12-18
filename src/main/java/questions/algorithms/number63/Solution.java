@@ -1,4 +1,4 @@
-package questions.number63;
+package questions.algorithms.number63;
 
 public class Solution {
     public static int uniquePathsWithObstacles(int[][] obstacleGrid) {
