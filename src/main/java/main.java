@@ -1,8 +1,8 @@
-import questions.algorithms.number7.Solution;
+import questions.algorithms.dp.number5.Solution;
 
 public class main {
     public static void main(String[] args){
-
-        System.out.println(Solution.reverse(-2147483648));
+        Solution solution = new Solution();
+        System.out.println(solution.longestPalindrome("aaa"));
     }
 }

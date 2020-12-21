@@ -1,4 +1,4 @@
-package questions.algorithms.number5;
+package questions.algorithms.dp.number5;
 
 
 // Time complexity: O(n^2)

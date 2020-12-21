@@ -1,4 +1,4 @@
-package questions.algorithms.number53;
+package questions.algorithms.dp.number53;
 
 // find the max ending at each array position
 // time complexity O(n)
