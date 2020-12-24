@@ -113,7 +113,7 @@ public class SnowAnimation extends Animation {
         // Exit the application when the user closes the frame.
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        SnowAnimation snowAnimation = new SnowAnimation(new ImageIcon("D:\\Development\\BackendStudy\\src\\main\\java\\animations\\christmas2\\snow.gif"), SCREEN_WIDTH, SCREEN_HEIGHT);
+        SnowAnimation snowAnimation = new SnowAnimation(new ImageIcon("D:\\Development\\BackendStudy\\src\\main\\resources\\BackendStudyNotes\\animations\\snow.gif"), SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // Add the snow panel to the center of the window
         Container contentPane = f.getContentPane();
