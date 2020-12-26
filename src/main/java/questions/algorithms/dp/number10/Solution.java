@@ -14,7 +14,7 @@ public class Solution {
 
         if (p.length()>=2 && p.charAt(1)=='*'){
             if (isFirstMatch(s,p)){
-                return isMatch(s.substring(1),p);
+                return isMatch(s, p.substring(2)) || isMatch(s.substring(1),p);
             }
             else {
                 return isMatch(s, p.substring(2));

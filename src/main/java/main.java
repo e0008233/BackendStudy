@@ -1,8 +1,8 @@
-import questions.algorithms.dp.number10.Solution;
+import questions.algorithms.dp.number10.Solution1;
 
 public class main {
     public static void main(String[] args){
-        Solution solution = new Solution();
-        System.out.println(solution.isMatch("qweqef4aaa",".*a"));
+        Solution1 solution = new Solution1();
+        System.out.println(solution.isMatch("ab",".*"));
     }
 }

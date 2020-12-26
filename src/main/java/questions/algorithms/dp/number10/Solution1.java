@@ -1,36 +1,46 @@
 package questions.algorithms.dp.number10;
 
-
-//Approach 1: Recursion
-//        Intuition
-//
-//        If there were no Kleene stars (the * wildcard character for regular expressions), the problem would be easier - we simply check from left to right if each character of the text matches the pattern.
-//
-//        When a star is present, we may need to check many different suffixes of the text and see if they match the rest of the pattern. A recursive solution is a straightforward way to represent this relationship.
-
+// dp: use result[][] to record all the intermediate result
 public class Solution1 {
+
+    static Boolean result[][];
+    static String text;
+    static String pattern;
+
     public boolean isMatch(String s, String p) {
-        if (p.isEmpty()) return s.isEmpty();
 
-        if (p.length()>=2 && p.charAt(1)=='*'){
-            if (isFirstMatch(s,p)){
-                return isMatch(s.substring(1),p);
-            }
-            else {
-                return isMatch(s, p.substring(2));
-            }
+        result = new Boolean[s.length()+1][p.length()+1];
+        text = s;
+        pattern = p;
 
-        }
-        else{
-            return isFirstMatch(s,p) && isMatch(s.substring(1),p.substring(1));
-        }
+        return dp(0,0);
     }
 
-    public boolean isFirstMatch(String s, String p){
-        // s: "", p:"a*" case is handled above
-        if ( s.isEmpty()) return false;
-        if (s.charAt(0)==p.charAt(0)) return true;
-        if (p.charAt(0)=='.') return true;
-        return false;
+    public boolean dp(int i, int j){
+        boolean ans;
+        if (result[i][j]!=null) return result[i][j];
+        if (j==pattern.length()){
+            ans = i==text.length();
+        }
+        else {
+
+            if (pattern.length() > j + 1 && pattern.charAt(j + 1) == '*') {
+                if (isFirstMatch(i, j)) {
+                    ans = dp(i + 1, j) || dp(i, j + 2);
+                } else {
+                    ans = dp(i, j + 2);
+                }
+            } else {
+                ans = isFirstMatch(i, j) && dp(i + 1, j + 1);
+            }
+        }
+        result[i][j]= ans;
+        return ans;
     }
+
+    public boolean isFirstMatch(int i, int j){
+        if (i>=text.length()) return false;
+        return text.charAt(i)==pattern.charAt(j)||pattern.charAt(j)=='.';
+    }
+
 }
