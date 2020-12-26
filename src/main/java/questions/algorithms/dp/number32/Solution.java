@@ -1,4 +1,4 @@
-package questions.algorithms.number32;
+package questions.algorithms.dp.number32;
 
 public class Solution {
     public int longestValidParentheses(String s) {
