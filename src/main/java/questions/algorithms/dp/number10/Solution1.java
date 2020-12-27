@@ -22,6 +22,7 @@ public class Solution1 {
         if (j==pattern.length()){
             ans = i==text.length();
         }
+
         else {
 
             if (pattern.length() > j + 1 && pattern.charAt(j + 1) == '*') {
