@@ -12,8 +12,12 @@ public class Solution1 {
         result = new Boolean[s.length()+1][p.length()+1];
         text = s;
         pattern = p;
+        System.out.println(result);
 
-        return dp(0,0);
+        boolean isMatch =  dp(0,0);
+//        System.out.println(result);
+
+        return isMatch;
     }
 
     public boolean dp(int i, int j){
