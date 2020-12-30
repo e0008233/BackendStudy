@@ -10,22 +10,37 @@ public class Solution {
         if (heights.length<=0) return 0;
 
 
-        for (int i = 0; i < heights.length; i++){
-
-        }
-        return 0;
+        int result = dac(0,heights.length-1,heights);
+        return result;
     }
 
-    public int dac(int[] heights){
-        int minimumMid = heights[0];
-        int minimumIndex = 0;
-        for (int i = 0; i < heights.length; i++){
-            if (heights[i]>minimumMid){
+    public int dac(int start, int end, int[] heights){
+        if (end<start) return 0;
+        if (end==start) return heights[end];
+
+        int minimumMid = heights[start];
+        int minimumIndex = start;
+        for (int i = start; i <=end; i++){
+            if (heights[i]<minimumMid){
                 minimumMid = heights[i];
-                minimumIndex = minimumIndex;
+                minimumIndex = i;
             }
         }
 
-        return 0;
+        int leftArea = dac(start,minimumIndex-1,heights);
+        int rightArea = dac(minimumIndex+1,end,heights);
+        int middleArea = heights[minimumIndex]*(end-start+1);
+
+        return max(leftArea,rightArea,middleArea);
+    }
+
+    public int max(int x, int y, int z){
+        if (x>y){
+            if (z>x) return z;
+            else return x;
+        }else{
+            if (z>y) return z;
+            else return y;
+        }
     }
 }
