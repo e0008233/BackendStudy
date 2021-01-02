@@ -1,10 +1,10 @@
-import questions.algorithms.dp.number152.*;
+import questions.algorithms.dp.number256.*;
 
 // Interesting question: number32, number 84
 public class main {
     public static void main(String[] args){
         Solution solution = new Solution();
 //        int[] input = new int[]{2,1,5,6,2,3};
-        System.out.println(solution.maxProduct(new int[]{0,2}));
+        System.out.println(solution.minCost(new int[][]{{14,2,11},{11,14,5},{14,3,10}}));
     }
 }
