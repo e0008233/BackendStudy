@@ -1,4 +1,4 @@
-import questions.algorithms.dp.number221.*;
+import questions.algorithms.dp.number300.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,6 @@ public class main {
     public static void main(String[] args){
         Solution solution = new Solution();
 
-        System.out.println(solution.maximalSquare(new char[][]{{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}}));
+        System.out.println(solution.lengthOfLIS(new int[]{4,10,4,3,8,9}));
     }
 }
