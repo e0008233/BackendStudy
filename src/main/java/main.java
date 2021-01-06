@@ -1,4 +1,4 @@
-import questions.algorithms.dp.number300.*;
+import questions.algorithms.dp.number322.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,6 @@ public class main {
     public static void main(String[] args){
         Solution solution = new Solution();
 
-        System.out.println(solution.lengthOfLIS(new int[]{4,10,4,3,8,9}));
+        System.out.println(solution.coinChange(new int[]{2},3));
     }
 }
