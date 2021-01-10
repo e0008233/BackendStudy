@@ -7,8 +7,10 @@ public class Solution {
         int last = nums.length-1;
         int index = partition(first,last,nums);
 
-        while (index!=k-1){
-            if (index<k-1){
+        // find kth largest, not the smallest
+        int m = nums.length-k;
+        while (index!=m){
+            if (index<m){
                 first=index+1;
                 index = partition(first,last,nums);
             }
