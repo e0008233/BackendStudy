@@ -19,7 +19,7 @@ public class Solution {
         ans[0]=1;
         ans[1]=0;
         for (int i=2;i<=n;i++){
-            for(int j=0; j<=j-1;j++){
+            for(int j=0; j<=i-1;j++){
                 ans[i]=ans[i]+ans[j]*ans[i-1-j];
             }
         }
