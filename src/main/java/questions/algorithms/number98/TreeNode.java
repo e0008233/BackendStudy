@@ -1,4 +1,4 @@
-package questions.algorithms.number94;
+package questions.algorithms.number98;
 
 public class TreeNode {
     public int val;

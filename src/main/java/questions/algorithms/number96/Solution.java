@@ -12,6 +12,9 @@ package questions.algorithms.number96;
 //　　　　+ dp[1] * dp[1]　　  (2为根的情况，则左右子树都可以各有一个数字)
 //
 // 　　　  + dp[2] * dp[0]　　  (3为根的情况，则左子树可以有两个数字，右子树一定不存在
+
+
+// For node n, left tree node can be (1..n-1), right tree can be (n+1..limit)
 public class Solution {
     public int numTrees(int n) {
         if (n==0||n==1) return 1;

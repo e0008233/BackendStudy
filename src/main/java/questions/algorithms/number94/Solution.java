@@ -1,55 +1,28 @@
 package questions.algorithms.number94;
 
-import questions.algorithms.number95.TreeNode;
+import questions.algorithms.number94.TreeNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Solution {
-    public static List<TreeNode> generateTrees(int n) {
-        if (n == 0) return new ArrayList<TreeNode>();
-        HashMap<Pair<Integer,Integer>,List<TreeNode>> results = new HashMap<Pair<Integer, Integer>, List<TreeNode>>();
-        return helper(1,n,results);
-    }
+    List<Integer> result;
+    public List<Integer> inorderTraversal(TreeNode root) {
+        result= new ArrayList<>();
 
-    public static List<TreeNode> helper(int start, int end, HashMap<Pair<Integer, Integer>, List<TreeNode>> results){
-        List<TreeNode> result = new ArrayList<TreeNode>();
-        if (start>end) {
-            result.add(null);
-            return result;
-        }
-        Pair<Integer,Integer> pair = new Pair<Integer, Integer>(start, end);
-        if (results.containsKey(pair)) return results.get(pair);
-        for (int i=start;i<=end;i++){
-            List<TreeNode> left = helper(start,i-1,results);
-            List<TreeNode> right = helper(i+1,end,results);
-            for (TreeNode leftNode: left){
-                for (TreeNode rightNode:right){
-                    TreeNode root = new TreeNode(i);
-                    root.left=leftNode;
-                    root.right=rightNode;
-                    result.add(root);
-                }
-            }
-        }
-        results.put(pair,result);
+        helper(root);
         return result;
     }
 
-    private static class Pair<I extends Number, I1 extends Number> {
-        public final int start;
-        public final int end;
+    private void helper(TreeNode root) {
+        if (root==null){
+            return;
+        }
 
-        public Pair(Integer start, Integer end) {
-            this.start = start;
-            this.end = end;;
-        }
-        @Override
-        public boolean equals(Object obj){
-            if (((Pair) obj).start==this.start && ((Pair) obj).end==this.end) return true;
-            else return false;
-        }
+        helper(root.left);
+        result.add(root.val);
+        helper(root.right);
 
     }
 

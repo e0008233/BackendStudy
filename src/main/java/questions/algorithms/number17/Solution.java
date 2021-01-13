@@ -1,4 +1,4 @@
-package questions.algorithms.dfs.number98;
+package questions.algorithms.number17;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package questions.algorithms.dfs.number17;
+package questions.algorithms.number17;
 
 
 import java.util.*;
@@ -8,7 +8,7 @@ import java.util.*;
 // using stack for dfs
 
 // adding every possible values to the popped value, until the length is met
-public class Solution1 {
+public class Solution2 {
 
     List<String> ans;
     Map<Character, String> phone = new HashMap<Character, String>() {{
@@ -25,17 +25,17 @@ public class Solution1 {
     public List<String> letterCombinations(String digits) {
         ans = new ArrayList<>();
         if (digits.isEmpty()) return ans;
-        Stack<String> stack = new Stack<>();
-        stack.add("");
-        while (!stack.isEmpty()){
-            String toRemove = stack.pop();
+        Queue<String> queue = new LinkedList<String>();
+        queue.add("");
+        while (!queue.isEmpty()){
+            String toRemove = queue.remove();
             if (toRemove.length()==digits.length()){
                 ans.add(toRemove);
             }
             else{
                 String value = phone.get(digits.charAt(toRemove.length()));
                 for (int i=0; i<value.length(); i++){
-                    stack.add(toRemove+value.charAt(i));
+                    queue.add(toRemove+value.charAt(i));
                 }
             }
         }

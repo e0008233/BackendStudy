@@ -1,9 +1,7 @@
-package questions.algorithms.dfs.number54;
+package questions.algorithms.number54;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Solution {
     List<Integer> ans;
