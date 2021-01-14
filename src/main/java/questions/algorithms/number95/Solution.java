@@ -6,7 +6,7 @@ import java.util.List;
 
 
 // For node n, left tree node can be (1..n-1), right tree can be (n+1..limit)
-// Use recursion to return the tree node 
+// Use recursion to return the tree node
 public class Solution {
     public static List<TreeNode> generateTrees(int n) {
         if (n == 0) return new ArrayList<TreeNode>();
