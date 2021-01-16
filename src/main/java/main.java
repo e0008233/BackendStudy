@@ -1,4 +1,4 @@
-import questions.algorithms.number92.*;
+import questions.algorithms.number134.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +10,6 @@ public class main {
         Solution solution = new Solution();
 
 
-        ListNode head = new ListNode(1,new ListNode(2));
-//        ListNode a1 = new ListNode(2);
-//        ListNode a2 = new ListNode(3);
-//        ListNode a3 = new ListNode(4);
-//        ListNode a4= new ListNode(5);
-//        head.next=a1;
-//        a1.next = a2;
-//        a2.next = a3;
-//        a3.next = a4;
-//        a4.next = null;
-        System.out.println(solution.reverseBetween(head,1,2));
+        System.out.println(solution.canCompleteCircuit(new int[]{1,2,3,4,5},new int[]{3,4,5,1,2}));
     }
 }
