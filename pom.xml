@@ -20,7 +20,29 @@
         </plugins>
     </build>
 
-<!--    <dependencies>-->
+    <dependencies>
+        <!-- Redis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+
+        <!-- Unit test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.4.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.4.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--for local jar-->
 <!--        <dependency>-->
 <!--            <groupId>com.sample</groupId>-->
 <!--            <artifactId>sample</artifactId>-->
@@ -28,7 +50,7 @@
 <!--            <scope>system</scope>-->
 <!--            <systemPath>${project.basedir}/src/main/resources/external_jar/objectdraw.jar</systemPath>-->
 <!--        </dependency>-->
-<!--    </dependencies>-->
+    </dependencies>
 
 
 </project>
