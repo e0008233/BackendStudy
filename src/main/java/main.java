@@ -1,4 +1,4 @@
-import questions.algorithms.number134.*;
+import questions.algorithms.dac.number395.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,6 @@ public class main {
         Solution solution = new Solution();
 
 
-        System.out.println(solution.canCompleteCircuit(new int[]{1,2,3,4,5},new int[]{3,4,5,1,2}));
+        System.out.println(solution.longestSubstring("ababacb",3));
     }
 }
