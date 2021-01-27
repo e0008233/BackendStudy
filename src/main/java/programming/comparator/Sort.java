@@ -27,13 +27,14 @@ public class Sort {
         list.add(new LiveScore(4,7,3));
 
 
-        //Compare by first name and then last name
-//        Comparator<LiveScore> compareByName = Comparator
-//                .comparing(LiveScore::getGuvScore,Comparator.reverseOrder())
-//                .thenComparing(LiveScore::getDiamondScore,Comparator.reverseOrder())
-//                .thenComparing(LiveScore::getTrendingScore,Comparator.naturalOrder());
-//        Collections.sort(list,compareByName);
+        //method 1:
+        Comparator<LiveScore> comparator = Comparator
+                .comparing(LiveScore::getGuvScore,Comparator.reverseOrder())
+                .thenComparing(LiveScore::getDiamondScore,Comparator.reverseOrder())
+                .thenComparing(LiveScore::getTrendingScore,Comparator.naturalOrder());
+        Collections.sort(list,comparator);
 
+        //method 2:
         list.sort(Comparator.comparing(e->((LiveScore)e).getGuvScore()).reversed()
                 .thenComparing(Comparator.comparing(e->((LiveScore)e).getDiamondScore()).reversed())
                 .thenComparing(e->((LiveScore)e).getTrendingScore()));
