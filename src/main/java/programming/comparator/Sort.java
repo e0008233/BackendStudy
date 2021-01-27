@@ -2,6 +2,7 @@ package programming.comparator;
 
 import java.util.*;
 
+// sorting based on multiple properties
 public class Sort {
 
     public void sort(List<LiveScore> list){
