@@ -1,46 +1,23 @@
 package programming.comparator;
 
 
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+import java.io.Serializable;
+@Data
+@AllArgsConstructor
 public class LiveScore implements Serializable {
     private static final long serialVersionUID = -6894762781323259600L;
-    private double hotScore;
-    private double trendingScore;
     private int guvScore;
     private int diamondScore;
+    private int trendingScore;
 
-
-    public double getHotScore() {
-        return this.hotScore;
+    public String toString() {
+        return "-------------------\n" +
+                "LiveScore.LiveScoreBuilder(guvScore=" + this.guvScore +
+                "\n diamondScore=" + this.diamondScore +
+                "\ntrendingScore=" + this.trendingScore +
+                ")" ;
     }
-
-    public double getTrendingScore() {
-        return this.trendingScore;
-    }
-
-    public int getGuvScore() {
-        return this.guvScore;
-    }
-
-    public int getDiamondScore() {
-        return this.diamondScore;
-    }
-
-    public void setHotScore(double hotScore) {
-        this.hotScore = hotScore;
-    }
-
-    public void setTrendingScore(double trendingScore) {
-        this.trendingScore = trendingScore;
-    }
-
-    public void setGuvScore(int guvScore) {
-        this.guvScore = guvScore;
-    }
-
-    public void setDiamondScore(int diamondScore) {
-        this.diamondScore = diamondScore;
-    }
-
 }

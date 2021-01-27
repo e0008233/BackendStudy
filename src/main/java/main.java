@@ -1,3 +1,4 @@
+import programming.comparator.Sort;
 import questions.algorithms.dac.number395.*;
 
 import java.util.ArrayList;
@@ -7,9 +8,9 @@ import java.util.List;
 
 public class main {
     public static void main(String[] args){
-        Solution solution = new Solution();
+        Sort solution = new Sort();
 
-
-        System.out.println(solution.longestSubstring("ababacb",3));
+        solution.sort();
+        System.out.println();
     }
 }
