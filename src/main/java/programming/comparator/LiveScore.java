@@ -14,10 +14,9 @@ public class LiveScore implements Serializable {
     private int trendingScore;
 
     public String toString() {
-        return "-------------------\n" +
-                "LiveScore.LiveScoreBuilder(guvScore=" + this.guvScore +
-                "\n diamondScore=" + this.diamondScore +
-                "\ntrendingScore=" + this.trendingScore +
-                ")" ;
+        return "\n-------------------\n" +
+                "guvScore=" + this.guvScore +
+                "\ndiamondScore=" + this.diamondScore +
+                "\ntrendingScore=" + this.trendingScore;
     }
 }
