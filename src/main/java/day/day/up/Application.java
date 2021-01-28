@@ -9,10 +9,10 @@ import day.day.up.programming.comparator.Sort;
 public class Application {
     public static void main(String[] args){
         Sort solution = new Sort();
-
         solution.sort();
         System.out.println();
 
+        // backend
         SpringApplication.run(Application.class, args);
     }
 
