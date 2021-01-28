@@ -34,6 +34,7 @@
         </plugins>
     </build>
 
+    
     <dependencies>
         <!-- Redis -->
         <dependency>
