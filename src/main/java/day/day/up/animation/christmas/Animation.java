@@ -1,4 +1,4 @@
-package day.day.up.christmas;
+package day.day.up.animation.christmas;
 import javax.swing.JComponent;
 
 /**
