@@ -1,13 +1,8 @@
-![](https://upload-images.jianshu.io/upload_images/2615789-c05974dae29ef81a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-> 努力的意义，就是，在以后的日子里，放眼望去全是自己喜欢的人和事！
-
-欢迎提issue和Pull request。所有的文档都是自己亲自码的，如果觉得不错，欢迎给star鼓励支持 :)
-
+> 努力的意义，就是，在以后的日子里，放眼望去全是自己喜欢的人和事！  
+  
+转载：https://github.com/CL0610/Java-concurrency
 
 整个系列文章为**Java并发专题**，一是自己的兴趣，二是，这部分在实际理解上很有难度，另外在面试过程中也是经常被问到。所以在学习过程中，记录了Java并发相关的基础知识，一是自己对知识能够建立体系，同时也希望有幸能够对其他人有用。
-
 
 关于Java并发专题：
 
