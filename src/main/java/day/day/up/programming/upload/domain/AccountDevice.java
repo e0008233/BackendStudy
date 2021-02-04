@@ -9,6 +9,16 @@ public class AccountDevice {
     private Timestamp createTime;
     private Timestamp updateTime;
 
+    public AccountDevice() {
+    }
+
+    public AccountDevice(String pi, int num, Timestamp createTime, Timestamp updateTime) {
+        this.pi = pi;
+        this.num = num;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
+
     public void setPi(String pi) {
         this.pi = pi;
     }

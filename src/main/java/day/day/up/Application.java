@@ -1,5 +1,6 @@
 package day.day.up;
 
+import day.day.up.programming.upload.ComplexCsv2DbInserter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import day.day.up.programming.comparator.Sort;
@@ -8,12 +9,13 @@ import day.day.up.programming.comparator.Sort;
 @SpringBootApplication
 public class Application {
     public static void main(String[] args){
-        Sort solution = new Sort();
-        solution.sort();
-        System.out.println();
+//        Sort solution = new Sort();
+//        solution.sort();
+//        System.out.println();
 
+        ComplexCsv2DbInserter.upload();
         // backend
-        SpringApplication.run(Application.class, args);
+//        SpringApplication.run(Application.class, args);
     }
 
 //    @Bean
