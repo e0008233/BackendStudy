@@ -95,6 +95,14 @@
         </dependency>
 
 
+<!--        read csv file-->
+        <dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
+
         <!--for local jar-->
 <!--        <dependency>-->
 <!--            <groupId>com.sample</groupId>-->
