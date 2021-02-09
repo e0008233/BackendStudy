@@ -44,7 +44,7 @@ public class ComplexCsv2DbInserter {
                     break;
                 case 3:
                     // release
-                    jdbcURL = "jdbc:mysql://10.40.3.115:3308/rings_account";
+                    jdbcURL = "jdbc:mysql://localhost:3308/rings_account";
                     username = "123";
                     password = "123";
                     break;
