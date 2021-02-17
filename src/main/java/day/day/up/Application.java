@@ -30,10 +30,10 @@ public class Application {
 //        }
 //        System.out.println(fileName+" " + start+" "+ end);
 //        ComplexCsv2DbInserter.upload(path,fileName,start,end,choice,size);
-        Database.updateDatabase();
+//        Database.updateDatabase();
 
         // backend
-//        SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 //    @Bean

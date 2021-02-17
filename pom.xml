@@ -109,6 +109,12 @@
             <version>8.0.19</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.paypal.sdk</groupId>
+            <artifactId>rest-api-sdk</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
         <!--for local jar-->
 <!--        <dependency>-->
 <!--            <groupId>com.sample</groupId>-->
