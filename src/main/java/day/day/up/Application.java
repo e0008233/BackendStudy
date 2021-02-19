@@ -2,9 +2,12 @@ package day.day.up;
 
 import day.day.up.programming.jdbc.Database;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import day.day.up.programming.comparator.Sort;
+
+import java.util.List;
 // Interesting question: number32(parentheses), number 84
 
 @SpringBootApplication
@@ -31,9 +34,10 @@ public class Application {
 //        System.out.println(fileName+" " + start+" "+ end);
 //        ComplexCsv2DbInserter.upload(path,fileName,start,end,choice,size);
 //        Database.updateDatabase();
-
         // backend
         SpringApplication.run(Application.class, args);
+
+
     }
 
 //    @Bean
