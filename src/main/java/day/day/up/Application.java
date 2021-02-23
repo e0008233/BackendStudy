@@ -1,6 +1,7 @@
 package day.day.up;
 
 import day.day.up.programming.jdbc.Database;
+import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -19,23 +20,25 @@ public class Application {
 //        String fileName = "";
 //        int start = 0;
 //        int end = 0;
-//        int choice = 0;
+        int choice = 0;
 //        int size = 0;
-//        String path = "";
-//        if (args.length > 0) {
-//            path=args[0];
+        String path = "";
+        if (args.length > 0) {
+            path=args[0];
 //            fileName=args[1];
 //            start=Integer.parseInt(args[2]);
 //            end=Integer.parseInt(args[3]);
-//            choice = Integer.parseInt(args[4]);
+            choice = Integer.parseInt(args[1]);
 //            size = Integer.parseInt(args[5]);
-//
-//        }
+
+        }
 //        System.out.println(fileName+" " + start+" "+ end);
 //        ComplexCsv2DbInserter.upload(path,fileName,start,end,choice,size);
 //        Database.updateDatabase();
         // backend
-        SpringApplication.run(Application.class, args);
+
+        Database3.updateDatabase(path,choice);
+//        SpringApplication.run(Application.class, args);
 
 
     }
