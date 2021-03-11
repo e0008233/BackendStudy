@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class PayPalServiceImpl implements PayPayService{
+    // my gmail acct
     private static final String CLIENT_ID = "AdLYOERyJrfShQJrP8vf4mgkbilH3Vgzl5xyHzyuudSDof1EgMFnufMEYDwNSeuJK0gHBatwqDxu753B";
     private static final String CLIENT_SECRET = "EB0vBRscvit7Mi33Ga0zc1AsrgY29PNJ2qb76d-4Wc873optm8xr9fwFlpqjcjwuW_x5SZZ238DJrQ2l";
     private static final String MODE = "sandbox";
