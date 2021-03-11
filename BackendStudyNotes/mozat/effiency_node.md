@@ -9,7 +9,9 @@ Mysql:
 - De-normalization: adding redundant information into a database to speed up the reads. Save time from joining 2 tables
 - Or no-sql
 
+Asynchronous processing
+- Slow operation should ideally be done asynchronously. Otherwise, a user night get stuck waiting for results. 
+
 Database partitioning (sharding)
 
-Asynchronous processing
-- Slow operation should ideally be done asynchronously. Otherwise, a user night get stuck waiting for results.  
+MapReduce
