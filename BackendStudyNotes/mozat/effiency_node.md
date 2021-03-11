@@ -8,10 +8,13 @@ Mysql:
 - Indexing
 - De-normalization: adding redundant information into a database to speed up the reads. Save time from joining 2 tables
 - Or no-sql
+- mysql read write splitting (???)
 
 Asynchronous processing
 - Slow operation should ideally be done asynchronously. Otherwise, a user night get stuck waiting for results. 
 
-Database partitioning (sharding)
+Database partitioning (sharding) (???)
 
-MapReduce
+sha256. signature (???)
+
+MapReduce to handle a large amount of data 
