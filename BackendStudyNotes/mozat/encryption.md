@@ -1,3 +1,6 @@
+https://www.cnblogs.com/chyingp/p/https-introduction.html
+https://www.cnblogs.com/yousen/p/5265232.html
+
 1. 消息摘要算法 （MD5, SHA256）  
    简介：
    - 消息摘要算法的主要特征是加密过程不需要密钥，并且经过加密的数据无法被解密
