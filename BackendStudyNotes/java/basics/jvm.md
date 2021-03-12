@@ -6,8 +6,8 @@ Heap:
 https://zhuanlan.zhihu.com/p/267090711
 - JVM在进行GC时，并不是对年轻代、老年代统一回收；大部分时候，回收都是在年轻代
 - GC分为两种：  
--- 轻GC（清理年轻代）  
--- 重GC（清理年轻代+老年代） 
+-- 轻GC（清理年轻代）   minor or incremental garbage collection
+-- 重GC（清理年轻代+老年代）  major or full garbage collection
 
 内存（时间复杂度）效率：复制算法 > 标记清除算法 > 标记压缩算法  
 内存整齐度：复制算法 = 标记压缩法 > 标记清除法  
@@ -15,8 +15,8 @@ https://zhuanlan.zhihu.com/p/267090711
 
 没有最优的算法，只有最合适的算法GC 也称为 分代收集算法
 
-- 对于年轻代： 对象存活率低，用复制算法
-- 对于老年代：区域大，对象存活率高，用标记清除+标记压缩混合实现
+- 对于年轻代： 对象存活率低，用复制算法 (Mark and Copy)
+- 对于老年代：区域大，对象存活率高，用标记清除+标记压缩混合实现  (mark-sweep & mark-sweep-compact)
   
 ![Alt text](./../images/person_class.jpg?raw=true)
 ![Alt text](./../images/person_memory.jpg?raw=true)
