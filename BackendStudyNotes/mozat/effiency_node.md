@@ -15,7 +15,8 @@ Asynchronous processing
 
 Database partitioning (sharding) (???)
 
-sha256. signature 证书 token(???)
+sha256. signature 证书 
+https://www.cnblogs.com/chyingp/p/https-introduction.html
 https://www.cnblogs.com/yousen/p/5265232.html
 
 MapReduce to handle a large amount of data 
