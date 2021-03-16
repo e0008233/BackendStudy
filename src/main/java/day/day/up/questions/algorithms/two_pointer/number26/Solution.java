@@ -2,21 +2,34 @@ package day.day.up.questions.algorithms.two_pointer.number26;
 
 
 public class Solution {
-    public void reverseString(char[] s) {
-        if (s.length==0||s.length==1) return;
-
-        int left = 0;
-        int right = s.length-1;
-        while (left<right){
-            swap(s,left,right);
-            left++;
-            right--;
+    public int removeDuplicates(int[] nums) {
+        if (nums.length==0) return 0;
+        if (nums.length==1) return 1;
+        int slow = 0;
+        int fast = slow+1;
+        int result = 0;
+        while (fast<nums.length){
+            if (nums[result]==nums[slow+1]){
+                while (fast<nums.length){
+                    if (nums[slow]!=nums[fast]){
+                        nums[result+1]=nums[fast];
+                        slow=fast;
+                        fast++;
+                        result++;
+                        break;
+                    }
+                    else{
+                       fast++;
+                    }
+                }
+            }
+            else{
+                nums[result+1]=nums[slow+1];
+                result++;
+                slow++;
+                fast++;
+            }
         }
-    }
-
-    private void swap(char[] s, int left, int right) {
-        char temp = s[left];
-        s[left] = s[right];
-        s[right] = temp;
+        return result+1;
     }
 }
