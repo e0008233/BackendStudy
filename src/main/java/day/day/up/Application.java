@@ -3,7 +3,7 @@ package day.day.up;
 import day.day.up.programming.jdbc.Database;
 import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
-import day.day.up.questions.algorithms.two_pointer.number76.Solution;
+import day.day.up.questions.algorithms.binary_search.number34.Solution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -39,7 +39,7 @@ public class Application {
         // backend
 
         Solution solution = new Solution();
-        System.out.println(solution.minWindow("ADOBECBANC","ABC"));
+        System.out.println(solution.searchRange(new int[]{1,4},4));
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
 
