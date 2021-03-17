@@ -3,10 +3,12 @@ package day.day.up.questions.algorithms.sorting.number215;
 
 public class Solution {
     public int findKthLargest(int[] nums, int k) {
+        if (nums.length==1) return nums[0];
+
         int start = 0;
         int end = nums.length-1;
-        int result= quickSort(nums,start,end)+1;
-        while (result!=k){
+        int result= quickSort(nums,start,end);
+        while (result+1!=k){
             if (k>result+1){
                 start = result+1;
             }
@@ -19,12 +21,12 @@ public class Solution {
     }
 
     public int quickSort(int[] nums, int start, int end){
-        if (start>=end) return -1;
+        if (start==end) return start;
         int pivot = nums[end];
         int index = start-1;
 
         while(start<=end-1){
-            if (nums[start]<end){
+            if (nums[start]>=pivot){
                 index++;
                 swap(nums,index,start);
             }

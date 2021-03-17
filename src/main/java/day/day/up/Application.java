@@ -39,7 +39,7 @@ public class Application {
         // backend
 
         Solution solution = new Solution();
-        System.out.println(solution.findKthLargest(new int[]{3,2,1,5,6,4},4));
+        System.out.println(solution.findKthLargest(new int[]{3,2,1,5,6,4},2));
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
 
