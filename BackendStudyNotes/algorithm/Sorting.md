@@ -10,5 +10,9 @@ Merge sort:
 ![Alt text](images/merge_sort.png?raw=true "complexity")  
 https://www.youtube.com/watch?v=4VqmGXwpLqc
 
+Heap sort:
+![Alt text](images/heap_sort.png?raw=true "complexity")
+https://www.youtube.com/watch?v=2DmK_H7IdTo
+
 
 
