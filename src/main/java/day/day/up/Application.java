@@ -9,11 +9,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import day.day.up.programming.comparator.Sort;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZoneId;
 import java.util.List;
 // Interesting question: number32(parentheses), number 84
 
 @SpringBootApplication
 public class Application {
+    private static final String zone = "Africa/Addis_Ababa"; //utc+3
+
+
     public static void main(String[] args){
 //        Sort solution = new Sort();
 //        solution.sort();
@@ -39,6 +46,21 @@ public class Application {
         // backend
 
         Solution solution = new Solution();
+
+
+        LocalDate firstDayOfMonth= YearMonth.from(Instant.now().atZone(ZoneId.of(zone))).atDay(1);
+
+        int startTime =(int) firstDayOfMonth.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
+//
+//
+//        int timezoneDiff= 3*3600;
+//        startTime+=timezoneDiff;
+
+        LocalDate currentDate = LocalDate.now(ZoneId.of(zone));
+        int currentDay = currentDate.getDayOfMonth();
+        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
+
+        System.out.println(endTime);
         System.out.println(solution.findKthLargest(new int[]{3,2,1,5,6,4},2));
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
