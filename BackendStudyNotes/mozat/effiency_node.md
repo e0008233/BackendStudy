@@ -24,3 +24,19 @@ https://www.cnblogs.com/qcloud1001/archive/2019/02/20/10405281.html
 
 
 MapReduce to handle a large amount of data 
+
+
+
+Coding review issues
+GZ Server Huanghua
+1. 缺少异常日志，所有异常要增加日志，以便快速检查问题         improved done
+2. 增加防刷功能（每个用户3秒内仅能访问一次）                        improved done
+   SG Server  ZhangHao
+1. 时区与数据部门保持一致，目前是utc， 数据部门是utc +3     improved done
+2. 在2 个接口的首行增加以个唯一表示的日志，用于做用户访问量统计.    Improved done
+3. remainingUsd<=req.getPrice() 改为 < 否则，用户账号有100usd 无法购买100 usd 的coins.   Improved done
+4. 重写增加金币的方法（避免快速访问时出现多加金币的问题） improved done
+5. 判断用户已经兑换的coins 记录，要从readonly 库改用write 库（避免用户快速访问时由于读写数据同步延时查询到未扣减记录，导致可重复扣减） improved done
+6. 对加经验点数的接口增加方法同步synchronized 保证单节点同步 , 然后业务实现逻辑，运用全局锁key 采用 userid 保证全局同步（避免并发导致重复增加coins) improved done
+
+都 OK 了
