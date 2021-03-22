@@ -39,4 +39,5 @@ GZ Server Huanghua
 5. 判断用户已经兑换的coins 记录，要从readonly 库改用write 库（避免用户快速访问时由于读写数据同步延时查询到未扣减记录，导致可重复扣减） improved done
 6. 对加经验点数的接口增加方法同步synchronized 保证单节点同步 , 然后业务实现逻辑，运用全局锁key 采用 userid 保证全局同步（避免并发导致重复增加coins) improved done
 
+insertSelective throw exception
 都 OK 了
