@@ -3,7 +3,7 @@ package day.day.up;
 import day.day.up.programming.jdbc.Database;
 import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
-import day.day.up.questions.algorithms.sorting.number215.Solution;
+import day.day.up.questions.algorithms.sorting.number347.Solution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -48,20 +48,19 @@ public class Application {
         Solution solution = new Solution();
 
 
-        LocalDate firstDayOfMonth= YearMonth.from(Instant.now().atZone(ZoneId.of(zone))).atDay(1);
-
-        int startTime =(int) firstDayOfMonth.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
+//        LocalDate firstDayOfMonth= YearMonth.from(Instant.now().atZone(ZoneId.of(zone))).atDay(1);
 //
+//        int startTime =(int) firstDayOfMonth.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
+////
 //
 //        int timezoneDiff= 3*3600;
-//        startTime+=timezoneDiff;
+////        startTime+=timezoneDiff;
+//
+//        LocalDate currentDate = LocalDate.now(ZoneId.of(zone));
+//        int currentDay = currentDate.getDayOfMonth();
+//        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
 
-        LocalDate currentDate = LocalDate.now(ZoneId.of(zone));
-        int currentDay = currentDate.getDayOfMonth();
-        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
-
-        System.out.println(endTime);
-        System.out.println(solution.findKthLargest(new int[]{3,2,1,5,6,4},2));
+        System.out.println(solution.topKFrequent(new int[]{6,0,1,4,9,7,-3,1,-4,-8,4,-7,-3,3,2,-3,9,5,-4,0},6));
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
 
