@@ -5,38 +5,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Solution {
-    List<String> ans;
-    Map<Character, String> phone = new HashMap<Character, String>() {{
-        put('2', "abc");
-        put('3', "def");
-        put('4', "ghi");
-        put('5', "jkl");
-        put('6', "mno");
-        put('7', "pqrs");
-        put('8', "tuv");
-        put('9', "wxyz");
-    }};
+class Solution {
+    public int maxAreaOfIsland(int[][] grid) {
+        if (grid.length==0||grid[0].length==0) return 0;
 
-    public List<String> letterCombinations(String digits) {
-        ans = new ArrayList<>();
-        if (digits.isEmpty()) return ans;
-        helper("",digits);
-        return ans;
+        int max = 0;
+        for (int i=0;i<grid.length;i++){
+            for (int j=0;j<grid[0].length;j++){
+                if (grid[i][j]>0){
+                    int area = 0;
+                    grid[i][j]=0;// mark as visited
+                    area =dfs(grid,i,j);
 
+                    if (area>max) max = area;
+                }
+            }
+        }
+
+
+        return max;
     }
 
-    public void helper (String prefix, String digits){
-        if (digits.isEmpty()){
-            ans.add(prefix);
-            return;
-        };
 
+    private int dfs(int[][] grid , int i, int j){
+        if (i<0 || j< 0|| i>=grid.length||j>=grid[0].length||grid[i][j]==0) return 0;
 
-        String letters = phone.get(digits.charAt(0));
-        for (int j = 0; j<letters.length();j++){
-            helper(prefix+Character.toString(letters.charAt(j)), digits.substring(1));
-        }
+        grid[i][j]=0; //mark as visited
+        return 1 + dfs(grid,i+1,j)+ dfs(grid,i-1,j)+ dfs(grid,i,j+1)+ dfs(grid,i,j-1);
 
     }
 }
