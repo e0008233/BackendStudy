@@ -1,4 +1,4 @@
-package day.day.up.questions.algorithms.search.number17;
+package day.day.up.questions.algorithms.search_bfs_dfs.number17;
 
 import java.util.ArrayList;
 import java.util.HashMap;
