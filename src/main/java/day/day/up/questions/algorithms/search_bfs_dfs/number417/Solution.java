@@ -1,33 +1,82 @@
 package day.day.up.questions.algorithms.search_bfs_dfs.number417;
 
-class Solution {
-    public int findCircleNum(int[][] isConnected) {
-        int count = 0;
-        int size = isConnected.length;
-        for (int i = 0;i<size;i++){
+import java.util.ArrayList;
+import java.util.List;
 
-            for (int j = 0; j< isConnected.length; j++){
-                if (isConnected[i][j] == 1){
-                    dfs(isConnected,i,j);
-                    count++;
-                }
+class Solution {
+    public static boolean[][] isToPO ;
+    public static boolean[][] isToAO;
+    public static boolean[][] isPOVisited;
+    public static boolean[][] isAOVisited;
+    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        List<List<Integer>> result = new ArrayList<>();
+        isToPO = new boolean[heights.length][heights[0].length];
+        isToAO = new boolean[heights.length][heights[0].length];
+
+        isPOVisited = new boolean[heights.length][heights[0].length];
+        isAOVisited = new boolean[heights.length][heights[0].length];
+
+
+        for (int i=0;i<heights.length;i++){
+            for (int j=0;j<heights[0].length;j++){
+              if (i==0 || j==0){
+                  dfsPO(heights,i,j,0);
+              }
+
+              if (i==heights.length-1 || j==heights[0].length-1){
+                  dfsAO(heights,i,j,0);
+              }
+
             }
         }
 
-        return count;
+        for (int i=0;i<heights.length;i++){
+            for (int j=0;j<heights[0].length;j++){
+                if (isToAO[i][j] && isToPO[i][j]) {
+                    List<Integer> toAdd = new ArrayList<>();
+                    toAdd.add(i);
+                    toAdd.add(j);
+                    result.add(toAdd);
+                }
+            }
+        }
+        return result;
 
     }
 
-    private void dfs(int[][] isConnected , int i, int j){
-        isConnected[i][j] = 0;  //mark as visited
-        isConnected[j][i] = 0;
-        for (int k=0;k<isConnected.length;k++){
-            if (isConnected[i][k]==1){ // visit all i's friends
-                dfs(isConnected,i,k);
-            }
-            if (isConnected[j][k]==1){ // visit all j's friends
-                dfs(isConnected,j,k);
-            }
+
+    private void dfsPO(int[][] height , int i, int j, int currentHeight){
+        if (i<0 || j< 0|| i>=height.length||j>=height[0].length ||isToPO[i][j]) return;
+
+        if (i==0 || j==0 || height[i][j]>=currentHeight){
+            isToPO[i][j] = true;
+            dfsPO(height,i+1,j,height[i][j]);
+            dfsPO(height,i-1,j,height[i][j]);
+            dfsPO(height,i,j+1,height[i][j]);
+            dfsPO(height,i,j-1,height[i][j]);
+
+        }
+        else{
+            return;
+        }
+
+    }
+
+
+
+    private void dfsAO(int[][] height , int i, int j, int currentHeight){
+        if (i<0 || j< 0|| i>=height.length||j>=height[0].length||isToAO[i][j]) return;
+
+        if (i==height.length-1 || j==height[0].length-1 || height[i][j]>=currentHeight){
+            isToAO[i][j] = true;
+            dfsAO(height,i+1,j,height[i][j]);
+            dfsAO(height,i-1,j,height[i][j]);
+            dfsAO(height,i,j+1,height[i][j]);
+            dfsAO(height,i,j-1,height[i][j]);
+
+        }
+        else{
+            return;
         }
 
     }
