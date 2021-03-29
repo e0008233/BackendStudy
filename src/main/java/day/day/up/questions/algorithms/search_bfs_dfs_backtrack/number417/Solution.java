@@ -1,4 +1,4 @@
-package day.day.up.questions.algorithms.search_bfs_dfs.number417;
+package day.day.up.questions.algorithms.search_bfs_dfs_backtrack.number417;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package day.day.up.questions.algorithms.search_bfs_dfs.number695;
+package day.day.up.questions.algorithms.search_bfs_dfs_backtrack.number695;
 
 class Solution {
     public int maxAreaOfIsland(int[][] grid) {

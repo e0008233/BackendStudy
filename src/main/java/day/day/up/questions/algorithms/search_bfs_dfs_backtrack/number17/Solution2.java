@@ -1,4 +1,4 @@
-package day.day.up.questions.algorithms.search_bfs_dfs.number17;
+package day.day.up.questions.algorithms.search_bfs_dfs_backtrack.number17;
 
 
 import java.util.*;

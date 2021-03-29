@@ -1,9 +1,4 @@
-package day.day.up.questions.algorithms.search_bfs_dfs.number547;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package day.day.up.questions.algorithms.search_bfs_dfs_backtrack.number547;
 
 class Solution {
     public int findCircleNum(int[][] isConnected) {
