@@ -3,7 +3,7 @@ package day.day.up;
 import day.day.up.programming.jdbc.Database;
 import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
-import day.day.up.questions.algorithms.sorting.number347.Solution;
+import day.day.up.questions.algorithms.search_bfs_dfs_backtrack.number77.Solution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -60,7 +60,7 @@ public class Application {
 //        int currentDay = currentDate.getDayOfMonth();
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
 
-        System.out.println(solution.topKFrequent(new int[]{6,0,1,4,9,7,-3,1,-4,-8,4,-7,-3,3,2,-3,9,5,-4,0},6));
+        System.out.println(solution.combine(4,2));
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
 
