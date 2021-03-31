@@ -3,6 +3,7 @@ package day.day.up;
 import day.day.up.programming.jdbc.Database;
 import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
+import day.day.up.programming.upload.SimpleUpload;
 import day.day.up.questions.algorithms.search_bfs_dfs_backtrack.number51.Solution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -60,7 +61,8 @@ public class Application {
 //        int currentDay = currentDate.getDayOfMonth();
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
 
-        System.out.println(solution.solveNQueens(4));
+//        System.out.println(solution.solveNQueens(4));
+        SimpleUpload.upload();
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
 
