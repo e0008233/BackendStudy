@@ -19,7 +19,7 @@ import java.util.List;
 
 public class SimpleUpload {
     public static void upload(){
-        String csvFilePath ="/Users/zhang/Desktop/diff.csv";
+        String csvFilePath ="/Users/zhang/Desktop/input.csv";
 
         String jdbcURL= "";
         String username="";
@@ -27,7 +27,7 @@ public class SimpleUpload {
 
         String sql = "";
 
-        int choice = 2;
+        int choice = 3;
 
 
         ICsvBeanReader beanReader = null;
@@ -37,7 +37,7 @@ public class SimpleUpload {
         CellProcessor[] processors = new CellProcessor[]{
                 new ParseInt(), // userId
                 new ParseInt(), // Salary
-                new NotNull(), // time
+//                new NotNull(), // time
         };
 
         try {
@@ -52,10 +52,9 @@ public class SimpleUpload {
             beanReader = new CsvBeanReader(new FileReader(csvFilePath), CsvPreference.STANDARD_PREFERENCE);
 //            beanReader.getHeader(false);
             SbcmSalary bean = null;
-            String[] header = {"userId", "remainingSalary", "monthYear"};
+            String[] header = {"userId", "remainingSalary"};
             int count = 0;
 
-            boolean isStart = false;
             while ((bean = beanReader.read(SbcmSalary.class, header, processors)) != null) {
 
                 list.add(bean);
@@ -64,11 +63,10 @@ public class SimpleUpload {
             for(SbcmSalary sbcmSalary:list){
                 int userId = sbcmSalary.getUserId();
                 int remainingSalary = sbcmSalary.getRemainingSalary();
-                String time = sbcmSalary.getMonthYear();
 
                 statement.setInt(1, userId);
                 statement.setInt(2, remainingSalary);
-                statement.setString(3, time);
+                statement.setString(3, "3-2021");
 
                 count++;
                 statement.addBatch();

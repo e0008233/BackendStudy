@@ -6,5 +6,5 @@ import lombok.Data;
 public class SbcmSalary {
     int userId;
     int remainingSalary;
-    String monthYear;
+//    String monthYear;
 }
