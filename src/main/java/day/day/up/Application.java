@@ -4,7 +4,7 @@ import day.day.up.programming.jdbc.Database;
 import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
 import day.day.up.programming.upload.SimpleUpload;
-import day.day.up.questions.algorithms.search_bfs_dfs_backtrack.number934.Solution;
+import day.day.up.questions.algorithms.two_pointer.number15.Solution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -61,7 +61,7 @@ public class Application {
 //        int currentDay = currentDate.getDayOfMonth();
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
 
-        System.out.println(solution.shortestBridge(new int[][]{{1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1}}));
+        System.out.println(solution.threeSum(new int[]{-1,0,1,2,-1,-4}));
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
 
