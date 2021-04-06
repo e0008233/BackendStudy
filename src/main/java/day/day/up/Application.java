@@ -1,5 +1,8 @@
 package day.day.up;
 
+import com.google.zxing.WriterException;
+import day.day.up.others.qrcode.QrCodeService;
+import day.day.up.others.qrcode.QrCodeServiceImpl;
 import day.day.up.programming.jdbc.Database;
 import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
@@ -10,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import day.day.up.programming.comparator.Sort;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -46,8 +50,6 @@ public class Application {
 //        Database.updateDatabase();
         // backend
 
-        Solution solution = new Solution();
-
 
 //        LocalDate firstDayOfMonth= YearMonth.from(Instant.now().atZone(ZoneId.of(zone))).atDay(1);
 //
@@ -60,8 +62,16 @@ public class Application {
 //        LocalDate currentDate = LocalDate.now(ZoneId.of(zone));
 //        int currentDay = currentDate.getDayOfMonth();
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
-
-        System.out.println(solution.threeSum(new int[]{-1,0,1,2,-1,-4}));
+//        Solution solution = new Solution();
+//        System.out.println(solution.threeSum(new int[]{-1,0,1,2,-1,-4}));
+        QrCodeService qrCodeService = new QrCodeServiceImpl();
+        try {
+            qrCodeService.generateQrCode();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
 
