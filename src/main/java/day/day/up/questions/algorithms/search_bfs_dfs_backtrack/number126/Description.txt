@@ -20,4 +20,4 @@ Example 2:
 
 Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log"]
 Output: []
-Explanation: The endWord "cog" is not in wordList, therefore there is no valid transformation sequence.
+Explanation: The endWord "cog" is not in wordList, therefore there is no valid transformation sequence。
