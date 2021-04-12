@@ -8,9 +8,11 @@ import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import sun.awt.image.BufferedImageGraphicsConfig;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -42,6 +44,9 @@ public class QrCodeServiceImpl implements QrCodeService{
             解决：https://ququjioulai.iteye.com/blog/2254382
          */
         bitMatrix = changeColor(bitMatrix,width,height);
+
+        BitMatrix bitMatrix2 = changeToMonoColor(bitMatrix,width,height);
+
         BufferedImage bufferedImage = logoMatrix(MatrixToImageWriter.toBufferedImage(bitMatrix,matrixToImageConfig), new File("/Users/zhang/Desktop/qr/logo.png"));
 //        BufferedImage bufferedImage = LogoMatrix(toBufferedImage(bitMatrix), new File("D:\\logo.png"));
 //        int[] data = new int[bitMatrix.getWidth() * bitMatrix.getHeight()];
@@ -51,7 +56,49 @@ public class QrCodeServiceImpl implements QrCodeService{
         ImageIO.write(bufferedImage, "png", new File("/Users/zhang/Desktop/qr/zxing2.png"));//输出带logo图片
         System.out.println("输出成功.");
     }
+    public BitMatrix changeToMonoColor(BitMatrix matrix, int width, int height) throws IOException {
+        int w = matrix.getWidth();
+        int h = matrix.getHeight();
+        int[] data = new int[w * h];
+        boolean flag1=true;
+        int stopx=0;
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                if(matrix.get(x, y)){
+                    if(flag1){
+                        flag1=false;
+                    }
+                }else{
+                    if(flag1==false){
+                        stopx =x;
+                        break;
+                    }
+                }
+            }
+            if(flag1==false)
+                break;
+        }
 
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                if(matrix.get(x, y)){
+                    data[y * w + x] = -1;
+                }else{
+//                    data[y * w + x] = -1;//白色
+                }
+            }
+        }
+        BufferedImage image = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_ARGB);
+
+        image.getRaster().setDataElements(0, 0, width, height, data);
+        BufferedImage bufferedImage = logoMatrix(image, new File("/Users/zhang/Desktop/qr/logo.png"));
+        ImageIO.write(bufferedImage, "png", new File("/Users/zhang/Desktop/qr/zxing4_white.png"));//输出带logo图片
+
+//        BufferedImageGraphicsConfig config = BufferedImageGraphicsConfig.getConfig(bufferedImage);
+//        bufferedImage =config.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
+        return matrix;
+    }
 
     public BitMatrix changeColor(BitMatrix matrix, int width, int height) throws IOException {
         int w = matrix.getWidth();
@@ -92,12 +139,12 @@ public class QrCodeServiceImpl implements QrCodeService{
                         data[y * w + x] = colorInt;
                     }
                 }else{
-                    data[y * w + x] = -1;//白色
+//                    data[y * w + x] = -1;//白色
                 }
             }
         }
         BufferedImage image = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB);
+                BufferedImage.TYPE_INT_ARGB);
 
         image.getRaster().setDataElements(0, 0, width, height, data);
         ImageIO.write(image, "png", new File("/Users/zhang/Desktop/qr/zxing1.png"));//输出带logo图片
@@ -105,8 +152,40 @@ public class QrCodeServiceImpl implements QrCodeService{
         BufferedImage bufferedImage = logoMatrix(image, new File("/Users/zhang/Desktop/qr/logo.png"));
         ImageIO.write(bufferedImage, "png", new File("/Users/zhang/Desktop/qr/zxing3.png"));//输出带logo图片
 
+//        BufferedImageGraphicsConfig config = BufferedImageGraphicsConfig.getConfig(bufferedImage);
+//        bufferedImage =config.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
         return matrix;
     }
+
+//    public BufferedImage logoMatrix(BufferedImage matrixImage, File logoFile) throws IOException{
+//
+//        int cornerRadius = 20;
+//        BufferedImage image = ImageIO.read(logoFile);
+//        int w = image.getWidth();
+//        int h = image.getHeight();
+//        BufferedImage logo = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+//        Graphics2D g2 = logo.createGraphics();
+//        logo = g2.getDeviceConfiguration().createCompatibleImage(w, h, Transparency.TRANSLUCENT);
+//        g2.dispose();
+//        g2 = logo.createGraphics();
+//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//        g2.fillRoundRect(0, 0,w, h, cornerRadius, cornerRadius);
+//        g2.setComposite(AlphaComposite.SrcIn);
+//        g2.drawImage(image, 0, 0, w, h, null);
+//        g2.dispose();
+//        ImageIO.write(logo, "png", new File("/Users/zhang/Desktop/qr/new_logo.png"));//输出带logo图片
+//
+//
+//        logo = ImageIO.read(new File("/Users/zhang/Desktop/qr/new_logo.png"));
+//        g2 = matrixImage.createGraphics();
+//        int matrixWidth = matrixImage.getWidth();
+//        int matrixHeigh = matrixImage.getHeight();
+//        g2.drawImage(logo,matrixWidth/5*2,matrixHeigh/5*2, matrixWidth/5, matrixHeigh/5, null);//绘制
+////        BasicStroke stroke = new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
+//        ImageIO.write(matrixImage, "png", new File("/Users/zhang/Desktop/qr/zxing_new_logo.png"));//输出带logo图片
+//
+//        return matrixImage ;
+//    }
 
     public BufferedImage logoMatrix(BufferedImage matrixImage, File logoFile) throws IOException{
         /**
@@ -122,19 +201,24 @@ public class QrCodeServiceImpl implements QrCodeService{
          */
         BufferedImage logo = ImageIO.read(logoFile);
 
+//        BufferedImage rounded = makeRoundedCorner(logo,20);
+//
+//        ImageIO.write(rounded, "png", new File("/Users/zhang/Desktop/qr/icon.rounded.png"));
+
+
         //开始绘制图片
         g2.drawImage(logo,matrixWidth/5*2,matrixHeigh/5*2, matrixWidth/5, matrixHeigh/5, null);//绘制
         BasicStroke stroke = new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
         g2.setStroke(stroke);// 设置笔画对象
         //指定弧度的圆角矩形
-        RoundRectangle2D.Float round = new RoundRectangle2D.Float(matrixWidth/5*2, matrixHeigh/5*2, matrixWidth/5, matrixHeigh/5,20,20);
+        RoundRectangle2D.Float round = new RoundRectangle2D.Float(matrixWidth/5*2-1, matrixHeigh/5*2-1, matrixWidth/5+2, matrixHeigh/5+2,20,20);
         g2.setColor(Color.white);
         g2.draw(round);// 绘制圆弧矩形
 
-        //设置logo 有一道灰色边框
+//        设置logo 有一道灰色边框
         BasicStroke stroke2 = new BasicStroke(1,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
         g2.setStroke(stroke2);// 设置笔画对象
-        RoundRectangle2D.Float round2 = new RoundRectangle2D.Float(matrixWidth/5*2+2, matrixHeigh/5*2+2, matrixWidth/5-4, matrixHeigh/5-4,20,20);
+        RoundRectangle2D.Float round2 = new RoundRectangle2D.Float(matrixWidth/5*2+1, matrixHeigh/5*2+1, matrixWidth/5-2, matrixHeigh/5-2,20,20);
         g2.setColor(new Color(128,128,128));
         g2.draw(round2);// 绘制圆弧矩形
 
@@ -143,12 +227,30 @@ public class QrCodeServiceImpl implements QrCodeService{
         return matrixImage ;
     }
 
-    public void beautify(BufferedImage image){
-        int width = 200;
-        int height = 200;
+    public BufferedImage makeRoundedCorner(BufferedImage image, int cornerRadius) {
+        int w = image.getWidth();
+        int h = image.getHeight();
+        BufferedImage output = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
-        Graphics2D gs = image.createGraphics();
-        gs.setBackground(Color.WHITE);
-        gs.clearRect(0, 0, width, height);
+        Graphics2D g2 = output.createGraphics();
+
+        // This is what we want, but it only does hard-clipping, i.e. aliasing
+        // g2.setClip(new RoundRectangle2D ...)
+
+        // so instead fake soft-clipping by first drawing the desired clip shape
+        // in fully opaque white with antialiasing enabled...
+        g2.setComposite(AlphaComposite.Src);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(Color.WHITE);
+        g2.fill(new RoundRectangle2D.Float(0, 0, w, h, cornerRadius, cornerRadius));
+
+        // ... then compositing the image on top,
+        // using the white shape from above as alpha source
+        g2.setComposite(AlphaComposite.SrcAtop);
+        g2.drawImage(image, 0, 0, null);
+
+        g2.dispose();
+
+        return output;
     }
 }
