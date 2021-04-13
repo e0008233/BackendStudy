@@ -17,6 +17,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.Buffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +26,8 @@ public class QrCodeServiceImpl implements QrCodeService{
     @Override
     public void generateQrCode() throws IOException, WriterException {
         String content = "https:www.google.com?uid=1232131";//二维码内容
-        int width = 200; // 图像宽度
-        int height = 200; // 图像高度
+        int width = 222; // 图像宽度
+        int height = 222; // 图像高度
         String format = "png";// 图像类型
         Map<EncodeHintType, Object> hints = new HashMap<>();
         //内容编码格式
@@ -200,27 +201,33 @@ public class QrCodeServiceImpl implements QrCodeService{
          * 读取Logo图片
          */
         BufferedImage logo = ImageIO.read(logoFile);
+//        logo = ImageIO.read(new URL("https://dd83h7aqkk7zq.cloudfront.net/images/2016/02/23/a1/__/a187d9ddeeb119aaf6ed860d1$a3fbfa20160223.png"));
+
 
 //        BufferedImage rounded = makeRoundedCorner(logo,20);
 //
 //        ImageIO.write(rounded, "png", new File("/Users/zhang/Desktop/qr/icon.rounded.png"));
 
 
+        int startingPoint = matrixWidth/5*2-10;
+        int width = matrixWidth/5+20;
+
         //开始绘制图片
-        g2.drawImage(logo,matrixWidth/5*2,matrixHeigh/5*2, matrixWidth/5, matrixHeigh/5, null);//绘制
-        BasicStroke stroke = new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
-        g2.setStroke(stroke);// 设置笔画对象
+        g2.drawImage(logo,startingPoint,startingPoint, width, width, null);//绘制
+
         //指定弧度的圆角矩形
-        RoundRectangle2D.Float round = new RoundRectangle2D.Float(matrixWidth/5*2-1, matrixHeigh/5*2-1, matrixWidth/5+2, matrixHeigh/5+2,20,20);
+        BasicStroke stroke = new BasicStroke(2,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
+        g2.setStroke(stroke);// 设置笔画对象
+        RoundRectangle2D.Float round = new RoundRectangle2D.Float(startingPoint-2, startingPoint-2, width+4, width+4,20,20);
         g2.setColor(Color.white);
         g2.draw(round);// 绘制圆弧矩形
 
 //        设置logo 有一道灰色边框
-        BasicStroke stroke2 = new BasicStroke(1,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
-        g2.setStroke(stroke2);// 设置笔画对象
-        RoundRectangle2D.Float round2 = new RoundRectangle2D.Float(matrixWidth/5*2+1, matrixHeigh/5*2+1, matrixWidth/5-2, matrixHeigh/5-2,20,20);
-        g2.setColor(new Color(128,128,128));
-        g2.draw(round2);// 绘制圆弧矩形
+//        BasicStroke stroke2 = new BasicStroke((float) 0.5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
+//        g2.setStroke(stroke2);// 设置笔画对象
+//        RoundRectangle2D.Float round2 = new RoundRectangle2D.Float(matrixWidth/5*2+1, matrixHeigh/5*2+1, matrixWidth/5-2, matrixHeigh/5-2,20,20);
+//        g2.setColor(new Color(128,128,128));
+//        g2.draw(round2);// 绘制圆弧矩形
 
         g2.dispose();
         matrixImage.flush() ;

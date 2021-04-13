@@ -6,6 +6,24 @@ import java.util.List;
 import java.util.Queue;
 
 class Solution {
+    class Node{
+        String value;
+        List<Node> next;
+        int length;
+
+        public Node(){}
+        public Node(String value){
+            this.value=value;
+        }
+
+        @Override
+        public boolean equals(Object obj){
+            Node node =  (Node)obj;
+            return this.value.equals(node.value);
+        }
+
+    }
+
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         List<List<String>> ans = new ArrayList<>();
 
@@ -14,11 +32,13 @@ class Solution {
         wordList.remove(beginWord);
         wordList.remove(endWord);
 
-        Queue<String> shorterQueue = new LinkedList<>();
-        shorterQueue.add(beginWord);
+        Queue<Node> shorterQueue = new LinkedList<>();
+        Node head = new Node(beginWord);
+        shorterQueue.add(head);
 
-        Queue<String> theOtherQueue = new LinkedList<>();
-        theOtherQueue.add(endWord);
+        Queue<Node> theOtherQueue = new LinkedList<>();
+        Node end = new Node(endWord);
+        theOtherQueue.add(end);
 
         boolean isFound =false;
         boolean backward = false;
@@ -29,19 +49,38 @@ class Solution {
                 swap(shorterQueue,theOtherQueue);
                 backward = !backward;
             }
-            char [] arr = shorterQueue.remove().toCharArray();
+            Node curr = shorterQueue.remove();
+
+            List<Node> neighbours = new ArrayList<>();
+            char [] arr = curr.value.toCharArray();
+
             for (int i = 0; i < beginWord.length(); i++) {
                 char ori = arr[i];
                 for(char c = 'a'; c <= 'z'; c++) {
                     if(ori == c) continue;
+
+                    arr[i] = c;
+
+                    String newWord = String.valueOf(arr);
+                    Node newNode = new Node(newWord);
+
+                    if (theOtherQueue.contains(newNode)){
+                        isFound=true;
+
+                    }
+                    if (wordList.contains(newWord)){
+                        // a neighbour is found
+                    }
                 }
+
+                arr[i] = ori;
             }
         }
         return ans;
     }
 
-    private void swap(Queue<String> shorterQueue, Queue<String> theOtherQueue) {
-        Queue<String> temp = shorterQueue;
+    private void swap(Queue<Node> shorterQueue, Queue<Node> theOtherQueue) {
+        Queue<Node> temp = shorterQueue;
         shorterQueue = theOtherQueue;
         theOtherQueue = temp;
     }
