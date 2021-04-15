@@ -42,3 +42,6 @@ GZ Server Huanghua
 7. 事务的一致性
 insertSelective throw exception
 都 OK 了
+
+
+ 资源隔离
