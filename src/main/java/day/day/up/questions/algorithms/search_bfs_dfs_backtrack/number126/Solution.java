@@ -27,7 +27,7 @@ class Solution {
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         List<List<String>> ans = new ArrayList<>();
 
-        if (!wordList.contains(endWord)) return ans;
+        if (!wordList.contains(endWord)) return new ArrayList<List<String>>();
 
         wordList.remove(beginWord);
         wordList.remove(endWord);

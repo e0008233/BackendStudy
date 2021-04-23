@@ -7,7 +7,7 @@ import day.day.up.programming.jdbc.Database;
 import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
 import day.day.up.programming.upload.SimpleUpload;
-import day.day.up.questions.algorithms.two_pointer.number15.Solution;
+import day.day.up.questions.algorithms.search_bfs_dfs_backtrack.number127.Solution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +18,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 // Interesting question: number32(parentheses), number 84
 
@@ -62,16 +64,16 @@ public class Application {
 //        LocalDate currentDate = LocalDate.now(ZoneId.of(zone));
 //        int currentDay = currentDate.getDayOfMonth();
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
-//        Solution solution = new Solution();
-//        System.out.println(solution.threeSum(new int[]{-1,0,1,2,-1,-4}));
-        QrCodeService qrCodeService = new QrCodeServiceImpl();
-        try {
-            qrCodeService.generateQrCode();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+        Solution solution = new Solution();
+        System.out.println(solution.ladderLength("hit","cog",new ArrayList<String>(Arrays.asList("hot","dot","dog","lot","log","cog"))));
+//        QrCodeService qrCodeService = new QrCodeServiceImpl();
+//        try {
+//            qrCodeService.generateQrCode();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (WriterException e) {
+//            e.printStackTrace();
+//        }
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
 
