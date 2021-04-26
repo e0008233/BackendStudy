@@ -5,6 +5,7 @@ import day.day.up.others.qrcode.QrCodeService;
 import day.day.up.others.qrcode.QrCodeServiceImpl;
 import day.day.up.programming.jdbc.Database;
 import day.day.up.programming.jdbc.Database3;
+import day.day.up.programming.lock.Test;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
 import day.day.up.programming.upload.SimpleUpload;
 import day.day.up.questions.algorithms.dynamic_programming.number413.Solution;
@@ -28,7 +29,7 @@ public class Application {
     private static final String zone = "Africa/Addis_Ababa"; //utc+3
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
 //        Sort solution = new Sort();
 //        solution.sort();
 //        System.out.println();
@@ -64,8 +65,9 @@ public class Application {
 //        LocalDate currentDate = LocalDate.now(ZoneId.of(zone));
 //        int currentDay = currentDate.getDayOfMonth();
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
-        Solution solution = new Solution();
-        System.out.println(solution.numberOfArithmeticSlices(new int[]{2,6,7,10}));
+        Test.testLock();
+//        Solution solution = new Solution();
+//        System.out.println(solution.numberOfArithmeticSlices(new int[]{2,6,7,10}));
 //        QrCodeService qrCodeService = new QrCodeServiceImpl();
 //        try {
 //            qrCodeService.generateQrCode();
