@@ -29,7 +29,6 @@ public class SimpleUpload {
 
         int choice = 3;
 
-
         ICsvBeanReader beanReader = null;
 
         int batchSize = 1000;
@@ -46,7 +45,7 @@ public class SimpleUpload {
 
             connection = DriverManager.getConnection(jdbcURL, username, password);
             connection.setAutoCommit(false);
-
+            System.out.println("Connection success");
             PreparedStatement statement = connection.prepareStatement(sql);
 
             beanReader = new CsvBeanReader(new FileReader(csvFilePath), CsvPreference.STANDARD_PREFERENCE);
@@ -60,13 +59,15 @@ public class SimpleUpload {
                 list.add(bean);
 
             }
+            System.out.println("try uploading");
+
             for(SbcmSalary sbcmSalary:list){
                 int userId = sbcmSalary.getUserId();
                 int remainingSalary = sbcmSalary.getRemainingSalary();
 
                 statement.setInt(1, userId);
                 statement.setInt(2, remainingSalary);
-                statement.setString(3, "3-2021");
+                statement.setString(3, "4-2021");
 
                 count++;
                 statement.addBatch();

@@ -65,8 +65,8 @@ public class Application {
 //        LocalDate currentDate = LocalDate.now(ZoneId.of(zone));
 //        int currentDay = currentDate.getDayOfMonth();
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
-        Test.testLock();
-//        Solution solution = new Solution();
+        SimpleUpload.upload();
+    //        Solution solution = new Solution();
 //        System.out.println(solution.numberOfArithmeticSlices(new int[]{2,6,7,10}));
 //        QrCodeService qrCodeService = new QrCodeServiceImpl();
 //        try {
