@@ -40,3 +40,6 @@ https://juejin.cn/post/6844904098999828488
 sql总结
 https://juejin.cn/post/6883270227078070286
 
+sql 索引和锁
+https://juejin.cn/post/6844903645125820424
+
