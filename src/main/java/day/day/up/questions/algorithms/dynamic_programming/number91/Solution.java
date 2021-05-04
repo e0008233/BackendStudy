@@ -1,4 +1,4 @@
-package day.day.up.questions.algorithms.number91;
+package day.day.up.questions.algorithms.dynamic_programming.number91;
 
 public  class Solution {
     public int numDecodings(String s) {

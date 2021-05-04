@@ -11,7 +11,8 @@ class Solution {
         int cols = mat[0].length;
 
         int[][] dist = new int[rows][cols];
-        Arrays.fill(dist, Integer.MAX_VALUE-10000);
+        for (int[] temp: dist) Arrays.fill(temp, Integer.MAX_VALUE-10000);
+
         //First pass: check for left and top (if nearest 0 is on the left or top)
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
