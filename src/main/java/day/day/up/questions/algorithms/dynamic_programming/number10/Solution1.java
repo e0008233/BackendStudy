@@ -1,6 +1,8 @@
 package day.day.up.questions.algorithms.dynamic_programming.number10;
 
 // dp: use result[][] to record all the intermediate result
+
+// dp[i][j] 表示以 i 截止的字符串是否可以被以 j 截止的 正则表达式匹配
 public class Solution1 {
 
     static Boolean result[][];

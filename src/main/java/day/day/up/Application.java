@@ -8,7 +8,7 @@ import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.lock.Test;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
 import day.day.up.programming.upload.SimpleUpload;
-import day.day.up.questions.algorithms.dynamic_programming.number416.Solution;
+import day.day.up.questions.algorithms.dynamic_programming.number650.Solution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -67,7 +67,7 @@ public class Application {
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
 //        SimpleUpload.upload();
             Solution solution = new Solution();
-        System.out.println(solution.canPartition(new int[]{1,5,10,6}));
+        System.out.println(solution.minSteps(24));
 //        QrCodeService qrCodeService = new QrCodeServiceImpl();
 //        try {
 //            qrCodeService.generateQrCode();
