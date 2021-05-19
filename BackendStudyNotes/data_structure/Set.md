@@ -50,3 +50,18 @@ TreeSet in Java
 
 TreeSet is one of the most important implementations of the SortedSet interface in Java that uses a Tree for storage. The ordering of the elements is maintained by a set using their natural ordering whether or not an explicit comparator is provided.  
 TreeSet<String> ts1 = new TreeSet<String>(); 
+
+*** 
+
+源码中的hashCode其实就是JVM启动的一个参数，每一个分支对应一个生成策略。通过-XX:hashCode，可以任意切换hashCode的生成策略。首先解释一下入参oop obj就是对象的逻辑地址。所以与地址相关的生成策略有两条，在hashCode等于1或4的时候。
+* hashCode==1：这种方式具有幂等的性质，在STW（stop-the-world）操作中，这种策略通常用于同步方案中。利用对象地址计算，使用不经常更新的随机数参与运算。
+* hashCode==4：与创建对象的内存位置有关，原样输出。
+* 其他情况：hashCode==0：简单地返回随机数，与对象的内存地址没有联系。然而根据随机数生成并全局地读写在多处理器下并不占优势。
+* hashCode==2：始终返回完全相同的标识，即hashCode=1。这可用于测试依赖对象标识的代码。
+* hashcode==3：从零开始计算哈希代码值。它看起来不是线程安全的，因此多个线程可以生成具有相同哈希代码的对象。
+* hashCode>=5（默认）：在jdk1.8中，这是默认的hashCode生成算法，支持多线程生成。使用了Marsaglia的xor-shift算法产生伪随机数。
+
+作者：噜噜呀
+链接：https://zhuanlan.zhihu.com/p/121555725
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
