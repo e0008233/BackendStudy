@@ -43,3 +43,6 @@ https://juejin.cn/post/6883270227078070286
 sql 索引和锁
 https://juejin.cn/post/6844903645125820424
 
+如何设计索引
+https://zhuanlan.zhihu.com/p/343312997
+
