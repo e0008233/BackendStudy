@@ -27,8 +27,6 @@ class Solution {
     public int getRandom() {
         ListNode curr = this.head;
         int ans= curr.val;
-
-        double rand = Math.random();
         int size = 1;
         while(curr!=null){
             if(Math.random() < 1.0 / size){
