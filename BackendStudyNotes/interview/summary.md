@@ -44,5 +44,7 @@
 * Distributed System
     * Kafka (百万级别吞吐量，少许丢失)，Rocket MQ（十万级别吞吐量，零丢失），Rabbit MQ (万级别吞吐量，社区文档优势)
 
-* 
+* 消息队列 https://juejin.cn/post/6844904000840531981
+    * 使用场景：异步、削峰、解耦
+
             
