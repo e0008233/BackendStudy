@@ -49,7 +49,7 @@
     
 * Redis
     * 使用场景：防止把数据库打崩，
-    * 数据结构：String，Hash，Set，Sorted Set，List
+    * 数据结构：String，Hash，Set，Sorted Set（跳跃表 skipList），List
     * Redis持久化: RDB (Redis Database Backup) & AOF (Append Only File)
       * RDB：RDB 持久化机制，是对 Redis 中的数据执行周期性的持久化。
         - RDB的原理：fork和cow。fork是指redis通过创建子进程来进行RDB操作，cow指的是copy on write，子进程创建后，父子进程共享数据段，父进程继续提供读写服务，写脏的页面数据会逐渐和子进程分离开来。
@@ -73,7 +73,7 @@
       3. 集群：为了解决单机Redis容量有限的问题，将数据按一定的规则分配到多台机器，内存/QPS不受限于单机，可受益于分布式集群高扩展性。
     * Redis Key的过期策略
         1. 惰性删除：当读/写一个已经过期的key时，会触发惰性删除策略，直接删除掉这个过期key，很明显，这是被动的。
-        2. 定期删除：由于惰性删除策略无法保证冷数据被及时删掉，所以 Redis 会定期主动淘汰一批已过期的key。
+        2. 定期删除：由于惰性删除策略无法保证冷数据被及时删掉，所以 Redis 会定期主动淘汰一批已过期的key。默认100ms就随机抽一些设置了过期时间的key，去检查是否过期，过期了就删了
         3. 主动删除：当前已用内存超过maxMemory限定时，触发主动清理策略。主动设置的前提是设置了maxMemory的值。
     * Pipeline: 可以将多次IO往返的时间缩减为一次，前提是pipeline执行的指令之间没有因果相关性。
 
