@@ -152,7 +152,7 @@
     * https://www.cnblogs.com/rjzheng/p/9096228.html
     
 
-Distributed system  
+* Distributed system  
     * 缓存更新策略   
       * 先更新数据库，再更新缓存；大多数场景不符合  
         - 缺点  
