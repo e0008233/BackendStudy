@@ -65,9 +65,11 @@ public class Application {
 //        LocalDate currentDate = LocalDate.now(ZoneId.of(zone));
 //        int currentDay = currentDate.getDayOfMonth();
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
-//        SimpleUpload.upload();
-            Solution solution = new Solution();
-        System.out.println(solution.hammingDistance(1,4));
+
+        // 1 july sbcm
+        SimpleUpload.upload();
+//            Solution solution = new Solution();
+//        System.out.println(solution.hammingDistance(1,4));
 //        QrCodeService qrCodeService = new QrCodeServiceImpl();
 //        try {
 //            qrCodeService.generateQrCode();

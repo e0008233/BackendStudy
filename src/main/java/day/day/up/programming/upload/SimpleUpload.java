@@ -24,7 +24,6 @@ public class SimpleUpload {
         String jdbcURL= "";
         String username="";
         String password="";
-
         String sql = "";
 
         int choice = 3;
@@ -67,7 +66,7 @@ public class SimpleUpload {
 
                 statement.setInt(1, userId);
                 statement.setInt(2, remainingSalary);
-                statement.setString(3, "4-2021");
+                statement.setString(3, "5-2021");
 
                 count++;
                 statement.addBatch();
