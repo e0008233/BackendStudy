@@ -151,6 +151,39 @@
     * https://zhuanlan.zhihu.com/p/118561398
     * https://www.cnblogs.com/rjzheng/p/9096228.html
     
+* java
+    * 大Class类：这个类描述的是所有的类的公共特性（类名:com.test,0或者多个方法、修饰符、字段、静态方法）
+    * Field类：字段的公共特性
+    * 反射机制
+    
+* Spring
+    * AOP （https://mp.weixin.qq.com/s/NXZp8a3n-ssnC6Y1Hy9lzw）
+      * 作用：在不修改源代码的前提下，为系统中不同的业务组件添加某些通用功能，安全，事务，缓存，性能等业务无关的相同行为
+      * 相关定义
+        - JoinPoint: 程序在执行流程中经过的一个个时间点，这个时间点可以是方法调用时，或者是执行方法中异常抛出时，也可以是属性被修改时等时机，在这些时间点上你的切面代码是可以（注意是可以但未必）被注入的
+        - Pointcut: JoinPoints 只是切面代码可以被织入的地方，但我并不想对所有的 JoinPoint 进行织入，这就需要某些条件来筛选出那些需要被织入的 JoinPoint，Pointcut 就是通过一组规则(使用 AspectJ pointcut expression language 来描述) 来定位到匹配的 joinpoint
+        - 代码织入（也叫增强），Pointcut 通过其规则指定了哪些 joinpoint 可以被织入，而 Advice 则指定了这些 joinpoint 被织入（或者增强）的具体时机与逻辑，是切面代码真正被执行的地方，主要有五个织入时机  
+          1. Before Advice: 在 JoinPoints 执行前织入
+          2. After Advice: 在 JoinPoints 执行后织入（不管是否抛出异常都会织入）
+          3. After returning advice: 在 JoinPoints 执行正常退出后织入（抛出异常则不会被织入）
+          4. After throwing advice: 方法执行过程中抛出异常后织入
+          4. Around Advice: 这是所有 Advice 中最强大的，它在 JoinPoints 前后都可织入切面代码，也可以选择是否执行原有正常的逻辑，如果不执行原有流程，它甚至可以用自己的返回值代替原有的返回值，甚至抛出异常。
+      * AOP的使用
+        1. 定义注解
+            * @Retention作用是定义被它所注解的注解保留多久
+                - RetentionPolicy.SOURCE：Discard during the compile. These annotations don't make any sense after the compile has completed, so they aren't written to the bytecode.
+                Example: @Override, @SuppressWarnings
+                - RetentionPolicy.CLASS: Discard during class load. Useful when doing bytecode-level post-processing. Somewhat surprisingly, this is the default.
+                - RetentionPolicy.RUNTIME: Do not discard. The annotation should be available for reflection at runtime. Example: @Deprecated
+            * @Target 说明了Annotation所修饰的对象范围：Annotation可被用于 packages、types（类、接口、枚举、Annotation类型）、类型成员（方法、构造方法、成员变量、枚举值）
+        2. 在方法签名上加上上述我们定义好的注解 
+        3. 然后再指定注解形式的 pointcuts 及 around advice
+
+
+
+RetentionPolicy.CLASS: Discard during class load. Useful when doing bytecode-level post-processing. Somewhat surprisingly, this is the default.
+
+RetentionPolicy.RUNTIME: Do not discard. The annotation should be available for reflection at runtime. Example: @Deprecated
 
 * Distributed system  
     * 缓存更新策略   
