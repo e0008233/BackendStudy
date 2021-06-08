@@ -163,8 +163,25 @@
         - 解耦：移除了直接在程序中 new 实例的高耦合做法
         - 方便：要替换类的实现，只需要在 Spring 容器中更换声明，无需改动代码
       * 简化开发，用最少的代码，做最多的事情（AOP，Template）
+        - 消除重复的模板代码（性能监控，异常封装，参数跟踪等……）
+        - 更代码结构更加整洁，通用的逻辑基本都可以用 AOP 来处理
+        - Spring 的声明式事务就是 Spring AOP 的优秀实现案例
       * 提供公共抽象，屏蔽底层，开箱即用，替换方便（Spring Cache，框架，中间件集成）
       * MVC模型的快速实现（视图解析，数据转换）  
+    * Spring八大模块
+      * Spring Core： 基础,可以说 Spring 其他所有的功能都需要依赖于该类库。主要提供 IoC 依赖注入功能。
+      * Spring Aspects ：该模块为与AspectJ的集成提供支持。
+      * Spring AOP ：提供了面向切面的编程实现。 
+      * Spring JDBC : Java数据库连接。
+      * Spring JMS ：Java消息服务。
+      * Spring ORM : 用于支持Hibernate等ORM工具。
+      * Spring Web : 为创建Web应用程序提供支持。
+      * Spring Test : 提供了对 JUnit 和 TestNG 测试的支持。
+    * Spring IOC: 控制反转就是把创建和管理(生命周期) bean 的过程转移给了第三方,一般有BeanFactory和ApplicationContext
+      * BeanFactory：简单粗暴，可以理解为 HashMap。但它一般只有 get, put 两个功能，所以称之为“低级容器”。Key - bean name， Value - bean object
+      * ApplicationContext 它是 BeanFactory 的子类多了很多功能，因为它继承了多个接口，可称之为“高级容器”
+      * 初始过程
+        XML/Annotation - 读取 -> Resource - 解析 -> beanDefinition - 注册 -> beanFactory
     * AOP （https://mp.weixin.qq.com/s/NXZp8a3n-ssnC6Y1Hy9lzw）
       * 作用：在不修改源代码的前提下，为系统中不同的业务组件添加某些通用功能，安全，事务，缓存，性能等业务无关的相同行为
       * 相关定义
@@ -186,8 +203,21 @@
             * @Target 说明了Annotation所修饰的对象范围：Annotation可被用于 packages、types（类、接口、枚举、Annotation类型）、类型成员（方法、构造方法、成员变量、枚举值）
         2. 在方法签名上加上上述我们定义好的注解 
         3. 然后再指定注解形式的 pointcuts 及 around advice
-
-
+      * Spring为什么使用代理，
+        - 代理模式是一种结构性设计模式。为对象提供一个替身，以控制对这个对象的访问。即通过代理对象访问目标对象，并允许在将请求提交给对象前后进行一些处理。
+          1. 静态代理：由程序员创建代理类或特定工具自动生成源代码再对其编译。在程序运行前代理类的 .class 文件就已经存在了
+          2. 动态代理:在程序运行时运用反射机制动态创建而成，动态就是在程序运行时生成的，而不是编译时。
+             - JDK 代理、接口代理
+             - cglib 代理（可以在内存动态的创建对象，而不是实现接口，属于动态代理的范畴）
+        - 可以简化暴露的借口，从而更容易被调用程序使用，通过动态代理，可以对目标类加入通知或者拦截器，从而可以提供切面功能，或者提供灵活的可配置的参数，参考spring的声明式事物管理部分。
+      * Spring 的 AOP 有哪几种创建代理的方式
+        - Spring 中的 AOP 目前支持 JDK 动态代理和 Cglib 代理。
+        - 通常来说：如果被代理对象实现了接口，则使用 JDK 动态代理，否则使用 Cglib 代理。另外，也可以通过指定 proxyTargetClass=true 来实现强制走 Cglib 代理。
+      * JDK 动态代理和 Cglib 代理的区别
+        1、JDK 动态代理本质上是实现了被代理对象的接口，而 Cglib 本质上是继承了被代理对象，覆盖其中的方法。
+        2、JDK 动态代理只能对实现了接口的类生成代理，Cglib 则没有这个限制。但是 Cglib 因为使用继承实现，所以 Cglib 无法代理被 final 修饰的方法或类。
+        3、在调用代理方法上，JDK 是通过反射机制调用，Cglib是通过FastClass 机制直接调用。FastClass 简单的理解，就是使用 index 作为入参，可以直接定位到要调用的方法直接进行调用。
+        4、在性能上，JDK1.7 之前，由于使用了 FastClass 机制，Cglib 在执行效率上比 JDK 快，但是随着 JDK 动态代理的不断优化，从 JDK 1.7 开始，JDK 动态代理已经明显比 Cglib 更快了。
 
 RetentionPolicy.CLASS: Discard during class load. Useful when doing bytecode-level post-processing. Somewhat surprisingly, this is the default.
 
