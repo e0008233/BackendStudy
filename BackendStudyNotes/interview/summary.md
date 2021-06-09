@@ -154,8 +154,18 @@
 * java
     * 大Class类：这个类描述的是所有的类的公共特性（类名:com.test,0或者多个方法、修饰符、字段、静态方法）
     * Field类：字段的公共特性
-    * 反射机制
-    
+    * 反射机制：在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取信息以及动态调用对象方法的功能称为JAVA语言的反射机制。   
+      在IDE中一按点 编译工具就会自动的把该对象能够使用的所有的方法和属性全部都列出来，这就是利用了Java反射的原理。
+        * 获取反射中的Class对象
+            1. 第一种，使用 Class.forName 静态方法。当你知道该类的全路径名时，你可以使用该方法获取 Class 类对象。  
+                Class clz = Class.forName("java.lang.String");  
+            2. 第二种，使用 .class 方法。  
+                Class clz = String.class;
+            3. 第三种，使用类对象的 getClass() 方法。
+                String str = new String("Hello");  
+                Class clz = str.getClass();  
+
+
 * Spring
     * Spring 为我们做了哪些事情？
       * 通过代码解耦，提高代码灵活性（依赖注入 DI）
@@ -177,7 +187,54 @@
       * Spring ORM : 用于支持Hibernate等ORM工具。
       * Spring Web : 为创建Web应用程序提供支持。
       * Spring Test : 提供了对 JUnit 和 TestNG 测试的支持。
-    * Spring IOC: 控制反转就是把创建和管理(生命周期) bean 的过程转移给了第三方,一般有BeanFactory和ApplicationContext
+    * Spring 框架中都用到了哪些设计模式？ 
+      1. 工厂模式：BeanFactory就是简单工厂模式的体现，用来创建对象的实例；
+      2. 单例模式：Bean默认为单例模式。
+      3. 代理模式：Spring的AOP功能用到了JDK的动态代理和CGLIB字节码生成技术；
+      4. 模板方法：用来解决代码重复的问题。比如. RestTemplate, JmsTemplate, JpaTemplate。
+      5. 观察者模式：定义对象键一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都会得到通知被制动更新，如Spring中listener的实现–ApplicationListener。
+    * Spring 容器启动流程（初始化与刷新）
+      容器初始化：
+        1. 基于java-config 技术分析的入口AnnotationConfigApplicationContext，或者
+        2. 如果我想生成 bean 对象，那么就需要一个 beanFactory 工厂（DefaultListableBeanFactory）；
+        3. 如果我想对加了特定注解（如 @Service、@Repository）的类进行读取转化成 BeanDefinition 对象（BeanDefinition 是 Spring 中极其重要的一个概念，它存储了 bean 对象的所有特征信息，如是否单例，是否懒加载，factoryBeanName 等），那么就需要一个注解配置读取器（AnnotatedBeanDefinitionReader）；
+        4. 如果我想对用户指定的包目录进行扫描查找 bean 对象，那么还需要一个路径扫描器（ClassPathBeanDefinitionScanner）
+      刷新：
+        1. 刷新前的预处理  prepareRefresh();
+        2. 获取 beanFactory，即前面创建的【DefaultListableBeanFactory】 ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+        3. 预处理 beanFactory，向容器中添加一些组件 prepareBeanFactory(beanFactory);
+        4. 子类通过重写这个方法可以在 BeanFactory 创建并与准备完成以后做进一步的设置 postProcessBeanFactory(beanFactory);
+        5. 执行 BeanFactoryPostProcessor 方法，beanFactory 后置处理器 invokeBeanFactoryPostProcessors(beanFactory);
+        6. 注册 BeanPostProcessors，bean 后置处理器 registerBeanPostProcessors(beanFactory);
+        7. 初始化 MessageSource 组件（做国际化功能；消息绑定，消息解析） initMessageSource();
+        8. 初始化事件派发器，在注册监听器时会用到 initApplicationEventMulticaster();
+        9. 留给子容器（子类），子类重写这个方法，在容器刷新的时候可以自定义逻辑，web 场景下会使用 onRefresh();
+        10. 注册监听器，派发之前步骤产生的一些事件（可能没有）  registerListeners();
+        11. 实例化 bean finishBeanFactoryInitialization(beanFactory);
+            * 实例化bean对象->设置对象属性->检查aware借口并设置相关依赖->beanPostProcessor前置处理->InitialisingBean->beanPostProcessor后置处理->注册必要的Destruction相关回调接口->使用中->是否实现DisposableBean接口->是否有自定义的destroy方法
+        12. 发布容器刷新完成事件  finishRefresh();
+   * Spring 循环依赖的解决方法
+     * spring单例对象的初始化大略分为三步：
+       1. createBeanInstance：实例化，其实也就是调用对象的构造方法实例化对象
+       2. populateBean：填充属性，这一步主要是多bean的依赖属性进行填充
+       3. initializeBean：调用spring xml中的init 方法。
+     * 循环依赖的三种情况及处理
+       1. 构造器的循环依赖：这种依赖spring是处理不了的，直 接抛出BeanCurrentlylnCreationException异常。 
+       2. 单例模式下的setter循环依赖：通过“三级缓存”处理循环依赖。 
+       3. 非单例循环依赖：无法处理。
+     * setter循环依赖如何用三级缓存解决循环依赖  
+       * 三级缓存的作用 
+         1. singletonFactories ： 进入实例化阶段的单例对象工厂的cache （三级缓存）
+         2. earlySingletonObjects ：完成实例化但是尚未初始化的，提前暴光的单例对象的Cache （二级缓存）
+         3. singletonObjects：完成初始化的单例对象的cache（一级缓存）
+      * 如何解决循环依赖性：A的某个field或者setter依赖了B的实例对象，同时B的某个field或者setter依赖了A的实例对象”这种循环依赖的情况。
+         1. A首先完成了初始化的第一步，并且将自己提前曝光到singletonFactories中，此时进行初始化的第二步，发现自己依赖对象B，此时就尝试去get(B)，发现B还没有被create，
+         2. 所以走create流程，B在初始化第一步的时候发现自己依赖了对象A，于是尝试get(A)，
+         3. 尝试一级缓存singletonObjects(肯定没有，因为A还没初始化完全)，尝试二级缓存earlySingletonObjects（也没有），尝试三级缓存singletonFactories，
+         4. 由于A通过ObjectFactory将自己提前曝光了，所以B能够通过ObjectFactory.getObject拿到A对象(虽然A还没有初始化完全，但是总比没有好呀)，
+         5. B拿到A对象后顺利完成了初始化阶段1、2、3，完全初始化之后将自己放入到一级缓存singletonObjects中。
+         6. 此时返回A中，A此时能拿到B的对象顺利完成自己的初始化阶段2、3，最终A也完成了初始化，进去了一级缓存singletonObjects中，而且更加幸运的是，由于B拿到了A的对象引用，所以B现在hold住的A对象完成了初始化
+   * Spring IOC: 控制反转就是把创建和管理(生命周期) bean 的过程转移给了第三方,一般有BeanFactory和ApplicationContext
       * BeanFactory：简单粗暴，可以理解为 HashMap。但它一般只有 get, put 两个功能，所以称之为“低级容器”。Key - bean name， Value - bean object
       * ApplicationContext 它是 BeanFactory 的子类多了很多功能，因为它继承了多个接口，可称之为“高级容器”
       * 初始过程
