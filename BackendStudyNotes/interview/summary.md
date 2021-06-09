@@ -163,7 +163,30 @@
                 Class clz = String.class;
             3. 第三种，使用类对象的 getClass() 方法。
                 String str = new String("Hello");  
-                Class clz = str.getClass();  
+                Class clz = str.getClass()
+    * 两种数据类型，基本类型和引用类型。 
+      1. 基本类型包括: byte、short、int、long、float、double、char、boolean
+      2. 引用类型包括三种，类类型，数组类型，和接口类型。   
+    * java 1.8更新
+      * 使用元空间替换永久代：避免OOM异常，合并HotSpot和JRockit的代码，JRockit从来没有所谓的永久代，也不需要开发运维人员设置永久代的大小，但是运行良好
+    
+    
+* JVM 体系结构
+    * Java虚拟机主要分为五大模块：
+      1. 类装载器子系统
+      2. 运行时数据区
+         - 线程私有的（程序计数器 虚拟机栈 本地方法栈）
+           * 程序计数器：可以看作是当前线程所执行的字节码的行号指示器，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。
+           * Java 虚拟机栈：它的生命周期和线程相同，描述的是 Java 方法执行的内存模型。  
+             Java 虚拟机栈会出现两种异常：StackOverFlowError 和 OutOfMemoryError。
+             - StackOverFlowError： 若Java虚拟机栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前Java虚拟机栈的最大深度的时候，就抛出StackOverFlowError异常。
+             - OutOfMemoryError： 若 Java 虚拟机栈的内存大小允许动态扩展，且当线程请求栈时内存用完了，无法再动态扩展了，此时抛出OutOfMemoryError异常。
+           * 本地方法栈(for native methods):用于存放该本地方法的局部变量表、操作数栈、动态链接、出口信息。
+         - 线程共有的（堆 方法区 直接内存） 
+      3. 执行引擎
+      4. 本地方法接口
+      5. 垃圾收集模块
+          
 
 
 * Spring
