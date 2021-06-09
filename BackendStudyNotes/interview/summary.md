@@ -192,13 +192,20 @@
       2. 单例模式：Bean默认为单例模式。
       3. 代理模式：Spring的AOP功能用到了JDK的动态代理和CGLIB字节码生成技术；
       4. 模板方法：用来解决代码重复的问题。比如. RestTemplate, JmsTemplate, JpaTemplate。
-      5. 观察者模式：定义对象键一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都会得到通知被制动更新，如Spring中listener的实现–ApplicationListener。
+      5. 观察者模式：定义对象键一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都会得到通知被制动更新，如Spring中listener的实现–ApplicationListener。 
+    * Spring 中的 bean 的作用域有哪些
+      1. singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。
+      2. prototype : 每次请求都会创建一个新的 bean 实例。
+      3. request : 每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效。
+      4. session : 每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效。
+      5. global-session： 全局session作用域，仅仅在基于portlet的web应用中才有意义，Spring5已经没有了。Portlet是能够生成语义代码(例如：HTML)片段的小型Java Web插件。它们基于portlet容器，可以像servlet一样处理HTTP请求。但是，与 servlet 不同，每个 portlet 都有不同的会话
     * Spring 容器启动流程（初始化与刷新）
       容器初始化：
-        1. 基于java-config 技术分析的入口AnnotationConfigApplicationContext，或者
+        1. 基于java-config 技术分析的入口AnnotationConfigApplicationContext，或者基于xml分析 入口即为 ClassPathXmlApplicationContext，它们俩的共同特征便是都继承了 AbstractApplicationContext 类
         2. 如果我想生成 bean 对象，那么就需要一个 beanFactory 工厂（DefaultListableBeanFactory）；
         3. 如果我想对加了特定注解（如 @Service、@Repository）的类进行读取转化成 BeanDefinition 对象（BeanDefinition 是 Spring 中极其重要的一个概念，它存储了 bean 对象的所有特征信息，如是否单例，是否懒加载，factoryBeanName 等），那么就需要一个注解配置读取器（AnnotatedBeanDefinitionReader）；
         4. 如果我想对用户指定的包目录进行扫描查找 bean 对象，那么还需要一个路径扫描器（ClassPathBeanDefinitionScanner）
+        5. 将配置类的BeanDefinition注册到容器中
       刷新：
         1. 刷新前的预处理  prepareRefresh();
         2. 获取 beanFactory，即前面创建的【DefaultListableBeanFactory】 ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
@@ -248,7 +255,7 @@
       * ApplicationContext 它是 BeanFactory 的子类多了很多功能，因为它继承了多个接口，可称之为“高级容器”
       * 初始过程
         XML/Annotation - 读取 -> Resource - 解析 -> beanDefinition - 注册 -> beanFactory
-    * AOP （https://mp.weixin.qq.com/s/NXZp8a3n-ssnC6Y1Hy9lzw）
+   * AOP （https://mp.weixin.qq.com/s/NXZp8a3n-ssnC6Y1Hy9lzw）
       * 作用：在不修改源代码的前提下，为系统中不同的业务组件添加某些通用功能，安全，事务，缓存，性能等业务无关的相同行为
       * 相关定义
         - JoinPoint: 程序在执行流程中经过的一个个时间点，这个时间点可以是方法调用时，或者是执行方法中异常抛出时，也可以是属性被修改时等时机，在这些时间点上你的切面代码是可以（注意是可以但未必）被注入的
@@ -287,7 +294,36 @@
         2、JDK 动态代理只能对实现了接口的类生成代理，Cglib 则没有这个限制。但是 Cglib 因为使用继承实现，所以 Cglib 无法代理被 final 修饰的方法或类。
         3、在调用代理方法上，JDK 是通过反射机制调用，Cglib是通过FastClass 机制直接调用。FastClass 简单的理解，就是使用 index 作为入参，可以直接定位到要调用的方法直接进行调用。
         4、在性能上，JDK1.7 之前，由于使用了 FastClass 机制，Cglib 在执行效率上比 JDK 快，但是随着 JDK 动态代理的不断优化，从 JDK 1.7 开始，JDK 动态代理已经明显比 Cglib 更快了。
-
+   * Spring 事务
+     * 方式: 编程式事务，在代码中硬编码。(不推荐使用)  声明式事务，在配置文件中配置（推荐使用）
+     * Spring 事务中的隔离级别有哪几种?  
+       1. TransactionDefinition.ISOLATION_DEFAULT:  使用后端数据库默认的隔离级别，Mysql 默认采用的 REPEATABLE_READ隔离级别 Oracle 默认采用的 READ_COMMITTED隔离级别.
+       2. TransactionDefinition.ISOLATION_READ_UNCOMMITTED: 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读
+       3. TransactionDefinition.ISOLATION_READ_COMMITTED:   允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生
+       4. TransactionDefinition.ISOLATION_REPEATABLE_READ:  对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。
+       5. TransactionDefinition.ISOLATION_SERIALIZABLE:   最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。但是这将严重影响程序的性能。通常情况下也不会用到该级别。
+     * Spring 事务中哪几种事务传播行为 (https://mp.weixin.qq.com/s/IglQITCkmx7Lpz60QOW7HA)
+          - 支持当前事务的情况：
+       1. TransactionDefinition.PROPAGATION_REQUIRED： 如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。
+       2. TransactionDefinition.PROPAGATION_SUPPORTS： 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。
+       3. TransactionDefinition.PROPAGATION_MANDATORY： 如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。（mandatory：强制性） 
+          - 不支持当前事务的情况：
+       4. TransactionDefinition.PROPAGATION_REQUIRES_NEW： 创建一个新的事务，如果当前存在事务，则把当前事务挂起。
+       5. TransactionDefinition.PROPAGATION_NOT_SUPPORTED： 以非事务方式运行，如果当前存在事务，则把当前事务挂起。
+       6. TransactionDefinition.PROPAGATION_NEVER： 以非事务方式运行，如果当前存在事务，则抛出异常。
+          - 其他情况：
+       7. TransactionDefinition.PROPAGATION_NESTED： 如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于TransactionDefinition.PROPAGATION_REQUIRED。
+     * 只要是以代理方式实现的声明式事务，无论是JDK动态代理，还是CGLIB直接写字节码生成代理，都只有public方法上的事务注解才起作用。而且必须在代理类外部调用才行，如果直接在目标类里面调用，事务照样不起作用。
+       private方法不能被继承，final方法不能被重写，static方法和继承不相干,Spring选择让protected方法和package方法不支持事务
+   * Spring boot: SpringBoot基本上是 Spring框架的扩展，它消除了设置 Spring应用程序所需的 XML配置，为更快，更高效的开发生态系统铺平了道路。
+     * SpringBoot中的一些特征：
+        1. 创建独立的 Spring应用。
+        2. 嵌入式 Tomcat、 Jetty、 Undertow容器（无需部署war文件）。
+        3. 提供的 starters 简化构建配置
+        4. 尽可能自动配置 spring应用。
+        5. 提供生产指标,例如指标、健壮检查和外部化配置
+        6. 完全没有代码生成和 XML配置要求         
+    
 RetentionPolicy.CLASS: Discard during class load. Useful when doing bytecode-level post-processing. Somewhat surprisingly, this is the default.
 
 RetentionPolicy.RUNTIME: Do not discard. The annotation should be available for reflection at runtime. Example: @Deprecated
