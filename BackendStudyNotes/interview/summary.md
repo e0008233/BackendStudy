@@ -211,7 +211,16 @@
         9. 留给子容器（子类），子类重写这个方法，在容器刷新的时候可以自定义逻辑，web 场景下会使用 onRefresh();
         10. 注册监听器，派发之前步骤产生的一些事件（可能没有）  registerListeners();
         11. 实例化 bean finishBeanFactoryInitialization(beanFactory);
-            * 实例化bean对象->设置对象属性->检查aware借口并设置相关依赖->beanPostProcessor前置处理->InitialisingBean->beanPostProcessor后置处理->注册必要的Destruction相关回调接口->使用中->是否实现DisposableBean接口->是否有自定义的destroy方法
+            - spring bean 容器的生命周期流程如下：
+            - Spring 容器根据配置中的 bean 定义中实例化 bean。
+            - Spring 使用依赖注入填充所有属性，如 bean 中所定义的配置。
+            - 如果 bean 实现 BeanNameAware 接口，则工厂通过传递 bean 的 ID 来调用 setBeanName()。 
+            - 如果 bean 实现 BeanFactoryAware 接口，工厂通过传递自身的实例来调用 setBeanFactory()。
+            - 如果存在与 bean 关联的任何 BeanPostProcessors，则调用 preProcessBeforeInitialization() 方法。
+            - 如果为 bean 指定了 init 方法（<bean> 的 init-method 属性），那么将调用它。
+            - 最后，如果存在与 bean 关联的任何 BeanPostProcessors，则将调用 postProcessAfterInitialization() 方法。
+            - 如果 bean 实现 DisposableBean 接口，当 spring 容器关闭时，会调用 destory()。
+            - 如果为 bean 指定了 destroy 方法（<bean> 的 destroy-method 属性），那么将调用它。
         12. 发布容器刷新完成事件  finishRefresh();
    * Spring 循环依赖的解决方法
      * spring单例对象的初始化大略分为三步：
