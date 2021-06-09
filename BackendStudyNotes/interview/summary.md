@@ -244,7 +244,7 @@
             4. 本地方法栈JNI(Native方法)中引用的对象。
         * 即使在可达性分析算法中不可达的对象, VM也并不是马上对其回收, 因为要真正宣告一个对象死亡, 至少要经历两次标记过程: 第一次是在可达性分析后发现没有与GC Roots相连接的引用链, 第二次是GC对在F-Queue执行队列中的对象进行的小规模标记(对象需要覆盖finalize()方法且没被调用过).
             * @Override protected void finalize() throws Throwable{}
-
+    * GC原理-垃圾回收算法
 
 * Spring
     * Spring 为我们做了哪些事情？
