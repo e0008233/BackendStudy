@@ -152,6 +152,11 @@
     * https://www.cnblogs.com/rjzheng/p/9096228.html
     
 * java
+    * 4 principles for oop
+      1. Abstraction
+      2. Polymorphism (overriding and overloading) 
+      3. Inheritance (key word: extends)  
+      4. Encapsulation  
     * 大Class类：这个类描述的是所有的类的公共特性（类名:com.test,0或者多个方法、修饰符、字段、静态方法）
     * Field类：字段的公共特性
     * 反射机制：在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取信息以及动态调用对象方法的功能称为JAVA语言的反射机制。   
@@ -252,17 +257,34 @@
          * 优点：简单高效，不会出现内存碎片问题
          * 缺点：内存利用率低，只有一半，存活对象较多时效率明显会降低
       3. 标记-整理算法:这是标记-清除算法的升级版。在完成标记阶段后，不是直接对可回收对象进行清理，而是让存活对象向着一端移动，然后清理掉边界以外的内存
+         * MARK - traverse live object graph to mark reachable objects
+         * SWEEP - scans memory to find unmarked memory
+         * COMPACT - relocating marked objects to defragment free memory
+         * When relocating objects in the heap, the JVM should correct all references to this object. During the relocation process the object graph is inconsistent, that is why STW pause is required.
          * 优点：利用率百分之百，没有内存碎片
          * 缺点：标记和清除的效率都不高，效率相对标记-清除要低
-      4. 分代收集算法:当前商业虚拟机都采用这种算法. 首先根据对象存活周期的不同将内存分为几块即新生代、老年代，然后根据不同年代的特点，采用不同的收集算法
-         * 新生代: 每次垃圾收集都能发现大批对象已死, 只有少量存活. 因此选用复制算法, 只需要付出少量存活对象的复制成本就可以完成
-         * 老年代: 因为对象存活率高、没有额外空间对它进行分配担保, 就必须采用“标记—清理”或“标记—整理”算法来进行回收, 不必进行内存复制, 且直接腾出空闲内存.
+      4. CMS(Concurrent Mark Sweep):基于"标记-清除"算法实现的
+         1) 初始标记 初始标记仅仅只是标记一下GC Roots能直接关联到的对象，速度很快，需要Stop The World(暂停所有的用户线程)
+         2) 并发标记 并发标记阶段就是进行GC Roots Tracing的过程 (用户不暂停)—用户不暂停就还可能产生一些对象与GC Roots不可达
+         3) 重新标记重新标记阶段是为了修正 并发标记期间 因用户程序继续运作而导致标记产生变动 的那一部分对象的标记记录，这个阶段的停顿时间会比初始阶段稍长一些,但是远比并发标记的时间短，仍然需要"Stop The World"
+         4) 并发清除并发清除阶段会清除对象**（用户不暂停）**
+         * 整个过程中耗时最长的并发表及和并发清除过程收集线程可以与用户线程一起工作，所以整体上来说，CMS收集器的内存回收过程与用户线程一起并发执行       
+         * 优点：CMS是一款优秀的收集器，主要优点:并发、低停顿
+         * 缺点：由于CMS采用"标记-清理"算法实现，所以当垃圾收集后，会产生大量的内存碎片。CMS收集器对CPU非常敏感，虽然不会导致用户线程停顿，但是会因为占用了一部分线程(或者说CPU资源)而导致应用程序变慢，总吞吐量降低
+      5. 分代收集算法:当前商业虚拟机都采用这种算法. 首先根据对象存活周期的不同将内存分为几块即新生代、老年代，然后根据不同年代的特点，采用不同的收集算法
+         * 新生代: 每次垃圾收集都能发现大批对象已死, 只有少量存活. 因此选用复制算法, 只需要付出少量存活对象的复制成本就可以完成 (Mark and Copy)
+         * 老年代: 因为对象存活率高、没有额外空间对它进行分配担保, 就必须采用“标记—清理”或“标记—整理”算法来进行回收, 不必进行内存复制, 且直接腾出空闲内存. (mark-sweep & mark-sweep-compact)
       * 内存（时间复杂度）效率：复制算法 > 标记清除算法 > 标记压缩算法
       * 内存整齐度：复制算法 = 标记压缩法 > 标记清除法  
       * 内存利用率：标记压缩法 = 标记清除法 > 复制算法
 
-
-
+* Rest api
+    * Client - server: client and server should be separated and developed without dependency
+    * Stateless: meaning that calls can be made independently of one another, and each call contains all of the data necessary to complete itself successfully.
+    * Cache: Because a stateless API can increase request overhead by handling large loads of incoming and outbound calls, a REST API should be designed to encourage the storage of cacheable data.
+    * Uniform Interface: This interface should provide an unchanging, standardized means of communicating between the client and the server, such as using HTTP with URI resources, CRUD (Create, Read, Update, Delete), and JSON.
+    * Layered System: each layer having a specific functionality and responsibility
+    
 
 * Spring
     * Spring 为我们做了哪些事情？
@@ -421,11 +443,24 @@
         4. 尽可能自动配置 spring应用。
         5. 提供生产指标,例如指标、健壮检查和外部化配置
         6. 完全没有代码生成和 XML配置要求         
+
+* Mybatis
+  * MyBatis 是一款优秀的持久层框架，一个半 ORM（对象关系映射）框架，它支持定制化 SQL、存储过程以及高级映射。MyBatis 可以使用简单的 XML 或注解来配置和映射原生类型、接口和 Java 的 POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。
+  * ORM（Object Relational Mapping），对象关系映射，是一种为了解决关系型数据库数据与简单Java对象（POJO）的映射关系的技术。简单的说，ORM是通过使用描述对象和数据库之间映射的元数据，将程序中的对象自动持久化到关系型数据库中。
+  * 为什么说Mybatis是半自动ORM映射工具？它与全自动的区别在哪里？
+    * Hibernate属于全自动ORM映射工具，使用Hibernate查询关联对象或者关联集合对象时，可以根据对象关系模型直接获取，所以它是全自动的。
+    * JPA (Java Persistent API) just is Interface. Hibernate is the implementation of JPA.
+    * 而Mybatis在查询关联对象或关联集合对象时，需要手动编写sql来完成，所以，称之为半自动ORM映射工具。
+  * Comparison between MyBatis and JPA/Hibernate
+    * Mybatis: simpler and has a smaller package size
+    * Hibernate: generates SQL automatically. No sql needed
+    * Mybatis: It uses sql which could be database dependent
+    * Hibernate: It uses HQL (Hibernate Query Language), which relatively independent of db, e.g. change from mysql to mongoDB
+    * Mybatis: It maps ResultSet from jdbc api to your POJO objects.
+    * Hibernate: maps your Java POJO Object to database tables.
+  * you can use Spring Data JPA for writing (INSERT, UPDATE, DELETE query). It’s a good choice when we want to write something in the database. You will create less code that means decrease bugs. It will make your code more readable. 
+  * In case, we need to join many tables(even though 3–4 tables) for report features. If you use Spring Data JPA we will make complex code with mapping the result. But with MyBatis we can do it easily by mapping mechanism. Of course, we have to add more code in this case. However, we will gain good reading performance. 
     
-RetentionPolicy.CLASS: Discard during class load. Useful when doing bytecode-level post-processing. Somewhat surprisingly, this is the default.
-
-RetentionPolicy.RUNTIME: Do not discard. The annotation should be available for reflection at runtime. Example: @Deprecated
-
 * Distributed system  
     * 缓存更新策略   
       * 先更新数据库，再更新缓存；大多数场景不符合  
