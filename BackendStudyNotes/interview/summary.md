@@ -277,6 +277,11 @@
       * 内存（时间复杂度）效率：复制算法 > 标记清除算法 > 标记压缩算法
       * 内存整齐度：复制算法 = 标记压缩法 > 标记清除法  
       * 内存利用率：标记压缩法 = 标记清除法 > 复制算法
+    *  Java内存实战
+      1. sudo jps -ml  // 查询所有运行的java进程
+      2. sudo jmap -heap [端口号]  | head -n20 // 可以得知新生代的分区大小
+      3. sudo jmap -histo 7276 | head -n20  // 通过jmap命令查看堆内存中的对象
+
 
 * Rest api
     * Client - server: client and server should be separated and developed without dependency
