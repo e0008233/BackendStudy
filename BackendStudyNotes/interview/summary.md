@@ -281,6 +281,10 @@
       1. sudo jps -ml  // 查询所有运行的java进程
       2. sudo jmap -heap [端口号]  | head -n20 // 可以得知新生代的分区大小
       3. sudo jmap -histo 7276 | head -n20  // 通过jmap命令查看堆内存中的对象
+      4. 观察老年代（heapOldGen）的使用情况，排查是否有内存泄漏 
+      5. sudo jmap -dump:format=b,file=heap 7276 // 因此我们先从服务管理平台摘掉了此节点，然后通过以下命令dump堆内存，寻找可疑的object
+      6. 从程序中解决，或者将将CMS收集器的分代年龄调到15（最大15）
+       
 
 
 * Rest api
