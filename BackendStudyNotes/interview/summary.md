@@ -1,14 +1,43 @@
 * 数据库调优 database tuning  
     * Sql performance tuning
-        * add and keep necessary indexes(composite index includes left most single index) and avoid index suppression ( not erqual on indexes, like statement like %123 ), no operation on the index, no tye conversion on the index
+        * 排查缓存干扰 （SELECT SQL_NO_CACHE * from...)
+        * 从slow_log排查慢查询  
+        * 用explain查看sql：https://zhuanlan.zhihu.com/p/51771446
+          * id:表示查询中执行SELECT子句或操作表的顺序
+          * type：关联类型或者访问类型，它指明了MySQL决定如何查找表中符合条件的行
+            - ALL: 全表扫描，这个类型是性能最差的查询之一。通常来说，我们的查询不应该出现 ALL 类型
+            - index：全索引扫描，和 ALL 类型类似，只不过 ALL 类型是全表扫描，而 index 类型是扫描全部的索引，主要优点是避免了排序，但是开销仍然非常大。如果在 Extra 列看到 Using index，说明正在使用覆盖索引，只扫描索引的数据，它比按索引次序全表扫描的开销要少很多。
+            - range：范围扫描，就是一个有限制的索引扫描，它开始于索引里的某一点，返回匹配这个值域的行。这个类型通常出现在 =、<>、>、>=、<、<=、IS NULL、<=>、BETWEEN、IN() 的操作中，key 列显示使用了哪个索引，当 type 为该值时，则输出的 ref 列为 NULL，并且 key_len 列是此次查询中使用到的索引最长的那个。
+            - key：这一列显示MySQL实际决定使用的索引。如果没有选择索引，键是NULL。
+            - rows：这一列显示了估计要找到所需的行而要读取的行数，这个值是个估计值，原则上值越小越好。
+            - extra：
+                * Using index：使用覆盖索引，表示查询索引就可查到所需数据，不用扫描表数据文件，往往说明性能不错。
+                * Using Where：在存储引擎检索行后再进行过滤，使用了where从句来限制哪些行将与下一张表匹配或者是返回给用户。
+                * Using temporary：在查询结果排序时会使用一个临时表，一般出现于排序、分组和多表 join 的情况，查询效率不高，建议优化。
+                * Using filesort：对结果使用一个外部索引排序，而不是按索引次序从表里读取行，一般有出现该值，都建议优化去掉，因为这样的查询 CPU 资源消耗大。
+        * add and keep necessary indexes(composite index includes left most single index) 
+        * avoid index suppression (在索引上执行函数会导致索引失效，not erqual on indexes, like statement like %123 ), no operation on the index, no tye conversion on the index
         * only querying necessary data(limit, avoid *)
         * run the complicated query in off-peak hours (through scheduler)
         * covering index (index includes queried columns,like composite index containing many columns)
+          - 当sql语句的所求查询字段（select列）和查询条件字段（where子句）全都包含在一个索引中（联合索引），可以直接使用索引查询而不需要回表。这就是覆盖索引。
+        * 前缀索引: 使用前缀索引，定义好长度，就可以做到既节省空间，又不用额外增加太多的查询成本。 
+          - 因为存在一个磁盘占用的问题，索引选取的越长，占用的磁盘空间就越大，相同的数据页能放下的索引值就越少，搜索的效率也就会越低。
+          - 采用倒序，hash或者删减字符串操作去区分
+        * 普通索引与唯一索引的选择问题
+          * change buffer：当需要更新一个数据页时，如果数据页在内存中就直接更新，而如果这个数据页还没有在内存中的话，在不影响数据一致性的前提下，InooDB 会将这些更新操作缓存在 change buffer 中，这样就不需要从磁盘中读入这个数据页了。在下次查询需要访问这个数据页的时候，将数据页读入内存，然后执行 change buffer 中与这个页有关的操作。通过这种方式就能保证这个数据逻辑的正确性。
+          * 将 change buffer 中的操作应用到原数据页，得到最新结果的过程称为 merge。除了访问这个数据页会触发 merge 外，系统有后台线程会定期 merge。在数据库正常关闭（shutdown）的过程中，也会执行 merge 操作。
+          * 显然，如果能够将更新操作先记录在 change buffer，减少读磁盘，语句的执行速度会得到明显的提升。而且，数据读入内存是需要占用 buffer pool 的，所以这种方式还能够避免占用内存，提高内存利用率。
+          * 普通索引和唯一索引应该怎么选择。其实，这两类索引在查询能力上是没差别的，主要考虑的是对更新性能的影响。所以，我建议你尽量选择普通索引。
         * link: https://juejin.cn/post/6844904098999828488
     * Command query responsibility segregation (CQRS,读写分离)
         * It is useful when having a lot of read command, a large amount of concurrent requests and less strict requirement on data consistency
         * Implementation: critical requests are handled by master, less critical requests are using master-slave replication (achieved by binlog)
-        
+    * 数据库设计三范式
+        1. 第一范式1NF：确保每个字段保持原子性，不可分割
+        2. 第二范式2NF：确保字段完全依赖于主键。也就是说在一个数据库表中，一个表中只能保存一种数据，不可以把多种数据保存在同一张数据库表中。
+        3. 第三范式3NF：必须满足2NF，实体中每个属性与主键直接相关而不能间接相关。
+    
 * 限流限速
     * 算法分类
         * 固定创口计数器: 维护一个固定单位时间内的计数器，如果检测到单位时间已经过去就重置计数器为零。

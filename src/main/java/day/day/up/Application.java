@@ -8,7 +8,7 @@ import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.lock.Test;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
 import day.day.up.programming.upload.SimpleUpload;
-import day.day.up.questions.algorithms.data_structure.number560.Solution;
+import day.day.up.questions.algorithms.data_structure.tree.leetcode105.Solution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -69,7 +69,7 @@ public class Application {
         // 1 july sbcm
 //        SimpleUpload.upload();
             Solution solution = new Solution();
-        System.out.println(solution.subarraySum(new int[]{1,1,1},2));
+        System.out.println(solution.buildTree(new int[]{1,2,3},new int[]{3,2,1}));
 //        QrCodeService qrCodeService = new QrCodeServiceImpl();
 //        try {
 //            qrCodeService.generateQrCode();
