@@ -525,8 +525,17 @@
     * Mybatis: It maps ResultSet from jdbc api to your POJO objects.
     * Hibernate: maps your Java POJO Object to database tables.
   * you can use Spring Data JPA for writing (INSERT, UPDATE, DELETE query). It’s a good choice when we want to write something in the database. You will create less code that means decrease bugs. It will make your code more readable. 
-  * In case, we need to join many tables(even though 3–4 tables) for report features. If you use Spring Data JPA we will make complex code with mapping the result. But with MyBatis we can do it easily by mapping mechanism. Of course, we have to add more code in this case. However, we will gain good reading performance. 
-    
+  * In case, we need to join many tables(even though 3–4 tables) for report features. If you use Spring Data JPA we will make complex code with mapping the result. But with MyBatis we can do it easily by mapping mechanism. Of course, we have to add more code in this case. However, we will gain good reading performance.
+  * 面试题:#{}和${}的区别是什么？
+    1. #{}是预编译处理，${}是字符串替换。
+    2. MyBatis在处理#{}时，会将SQL中的#{}替换为?号，使用PreparedStatement的set方法来赋值；MyBatis在处理 $ { } 时，就是把 ${ } 替换成变量的值。 
+    3. 使用 #{} 可以有效的防止SQL注入，提高系统安全性。
+       * String sql = "select * from tb_name where name = '" + varname + "' and passwd = '" + varpasswd + "' ";
+       * 如果我们把['or'1'='1]作为varpasswd传入进来.用户名随意,看看会成为什么? 
+       * select * from tb_name = 随意' and passwd = ' ' or '1'='1'; 因为'1'='1'肯定成立,所以可以任何通过验证
+
+
+
 * Distributed system  
     * 缓存更新策略   
       * 先更新数据库，再更新缓存；大多数场景不符合  
