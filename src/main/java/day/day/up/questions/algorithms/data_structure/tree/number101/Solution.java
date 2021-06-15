@@ -5,6 +5,24 @@ import day.day.up.questions.algorithms.number102.TreeNode;
 
 public class Solution {
     public boolean isSymmetric(TreeNode root) {
-        return true;
+        if (root==null) return true;
+
+        return isSymmetricHelper(root.left,root.right);
+    }
+
+    private boolean isSymmetricHelper(TreeNode left, TreeNode right) {
+        if (right ==null){
+            if (left==null) return true;
+            return false;
+        }
+
+        if (left ==null){
+            if (right==null) return true;
+            return false;
+        }
+
+        if (left.val!=right.val) return false;
+
+        return isSymmetricHelper(left.left,right.right) &&isSymmetricHelper(left.right,right.left);
     }
 }
