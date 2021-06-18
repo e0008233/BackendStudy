@@ -1,4 +1,4 @@
-* 数据库调优 database tuning  
+* 数据库调优 database tuning  （mutability, transaction, indexes, access control)
     * Sql performance tuning
         * 排查缓存干扰 （SELECT SQL_NO_CACHE * from...)
         * 从slow_log排查慢查询  
