@@ -1,0 +1,16 @@
+/**
+Start 2 threads, print 1-100 by turns.
+result like this:
+
+Thread_1-1
+Thread_2-1
+Thread_1-2
+Thread_2-2
+Thread_1-3
+Thread_2-3
+…
+Thread_1-99
+Thread_2-99
+Thread_1-100
+Thread_2-100
+**/
