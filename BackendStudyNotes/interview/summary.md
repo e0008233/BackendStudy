@@ -205,6 +205,11 @@
         6. volatile-ttl：当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的key优先移除。不推荐
         ps：如果没有设置 expire 的key, 不满足先决条件(prerequisites); 那么 volatile-lru, volatile-random 和 volatile-ttl 策略的行为, 和 noeviction(不删除) 基本上一致。
     * Pipeline: 可以将多次IO往返的时间缩减为一次，前提是pipeline执行的指令之间没有因果相关性。
+    * Redis遇到的错误和解决方法：
+      * 锁未被释放： 添加在finally block里，设置过期时间
+      * B的锁被A给释放了：一般我们在每个线程加锁时要带上自己独有的value值来标识，只释放指定value的key，否则就会出现释放锁混乱的场景。
+      * 锁过期了，业务还没执行完： redisson在加锁成功后，会注册一个定时任务监听这个锁，每隔10秒就去查看这个锁，如果还持有锁，就对过期时间进行续期。默认过期时间30秒。这个机制也被叫做：“看门狗”
+      * redis主从复制的坑（给锁的master宕机）：只能尽量保证机器的稳定性，减少发生此事件的概率。
     * https://zhuanlan.zhihu.com/p/118561398
     * https://www.cnblogs.com/rjzheng/p/9096228.html
     
@@ -648,6 +653,62 @@
         - 解决方案：  
           1. 设置缓存的有效时间(大量失效导致缓存雪崩)  
           2. 消息队列  
+    
+
+* Thread
+  * ReentrantLock: 同一个线程对于已经获得到的锁，可以多次继续申请到该锁的使用权
+  * Thread Pool：线程池通过复用线程，避免线程频繁创建和销毁。
+    * 使用场景
+      * 第1种是：固定大小线程池，特点是线程数固定，使用无界队列，适用于任务数量不均匀的场景、对内存压力不敏感，但系统负载比较敏感的场景；
+      * 第2种是：Cached线程池，特点是不限制线程数，适用于要求低延迟的短期任务场景；
+      * 第3种是：单线程线程池，也就是一个线程的固定线程池，适用于需要异步执行但需要保证任务顺序的场景；
+      * 第4种是：Scheduled线程池，适用于定期执行任务场景，支持按固定频率定期执行和按固定延时定期执行两种方式；
+      * 第5种是：工作窃取线程池，使用的ForkJoinPool，是固定并行度的多任务队列，适合任务执行时长不均匀的场景。
+    * 线程池参数介绍
+      * 第1个参数：设置核心线程数。默认情况下核心线程会一直存活。
+      * 第2个参数：设置最大线程数。决定线程池最多可以创建的多少线程。
+      * 第3个参数和第4个参数：用来设置线程空闲时间，和空闲时间的单位，当线程闲置超过空闲时间就会被销毁。可以通过AllowCoreThreadTimeOut方法来允许核心线程被回收。
+      * 第5个参数：设置缓冲队列，图中左下方的三个队列是设置线程池时常使用的缓冲队列。其中Array Blocking Queue是一个有界队列，就是指队列有最大容量限制。Linked Blocking Queue是无界队列，就是队列不限制容量。最后一个是Synchronous Queue，是一个同步队列，内部没有缓冲区。
+      * 第6个参数：设置线程池工厂方法，线程工厂用来创建新线程，可以用来对线程的一些属性进行定制，例如线程的Group、线程名、优先级等。一般使用默认工厂类即可。
+      * 第7个参数：设置线程池满时的拒绝策略。如右下角所示有四种策略，abort策略在线程池满后，提交新任务时会抛出Rejected Execution Exception，这个也是默认的拒绝策略。
+    * 线程池执行流程：我们向线程提交任务时可以使用Execute和Submit，区别就是Submit可以返回一个Future对象，通过Future对象可以了解任务执行情况，可以取消任务的执行，还可获取执行结果或执行异常。Submit最终也是通过Execute执行的。
+      * 向线程池提交任务时，会首先判断线程池中的线程数是否大于设置的核心线程数，如果不大于，就创建一个核心线程来执行任务。
+      * 如果大于核心线程数，就会判断缓冲队列是否满了，如果没有满，则放入队列，等待线程空闲时执行任务。
+      * 如果队列已经满了，则判断是否达到了线程池设置的最大线程数，如果没有达到，就创建新线程来执行任务。
+      * 如果已经达到了最大线程数，则执行指定的拒绝策略。这里需要注意队列的判断与最大线程数判断的顺序，不要搞反。
+  * The TheadLocal construct allows us to store data that will be accessible only by a specific thread.
+    * 使用场景：user context，session
+    * we should be extra careful when we're using ThreadLocals and thread pools together as different request may use the same thread
+    * 内存泄露：当 threadlocal 使用完后，将栈中的 threadlocal 变量置为 null，threadlocal 对象下一次 GC 会被回收，那么 Entry 中的与之关联的弱引用 key 就会变成 null，如果此时当前线程还在运行，那么 Entry 中的 key 为 null 的 Value 对象并不会被回收（存在强引用），这就发生了内存泄漏，当然这种内存泄漏分情况，如果当前线程执行完毕会被回收，那么 Value 自然也会被回收，但是如果使用的是线程池呢，线程跑完任务以后放回线程池（线程没有销毁，不会被回收），Value 会一直存在，这就发生了内存泄漏。
+  * 并发编程中有3大重要特性
+    * 原子性：一个操作或者多个操作，要么全部执行成功，要么全部执行失败。满足原子性的操作，中途不可被中断
+    * 可见性：多个线程共同访问共享变量时，某个线程修改了此变量，其他线程能立即看到修改后的值
+    * 有序性：程序执行的顺序按照代码的先后顺序执行。（由于JMM模型中允许编译器和处理器为了效率，进行指令重排序的优化。指令重排序在单线程内表现为串行语义，在多线程中会表现为无序。那么多线程并发编程中，就要考虑如何在多线程环境下可以允许部分指令重排，又要保证有序性）
+  * synchronized关键字同时保证上述三种特性
+    * synchronized是同步锁，同步块内的代码相当于同一时刻单线程执行，故不存在原子性和指令重排序的问题
+    * synchronized关键字的语义JMM有两个规定，保证其实现内存可见性：
+      - 线程解锁前，必须把共享变量的最新值刷新到主内存中；
+      - 线程加锁前，将清空工作内存中共享变量的值，从主内存中冲洗取值。
+  * volatile关键字作用的是保证可见性和有序性，并不保证原子性。  
+    * 当对volatile变量执行写操作后，JMM会把工作内存中的最新变量值强制刷新到主内存，写操作会导致其他线程中的缓存无效
+    * volatile变量的禁止指令重排序，在指令序列中添加“内存屏障”来禁止指令重排序的。
+      * LoadLoad屏障： 对于这样的语句Load1; LoadLoad; Load2，在Load2及后续读取操作要读取的数据被访问前，保证Load1要读取的数据被读取完毕。
+      * StoreStore屏障：对于这样的语句Store1; StoreStore; Store2，在Store2及后续写入操作执行前，保证Store1的写入操作对其它处理器可见。
+      * LoadStore屏障：对于这样的语句Load1; LoadStore; Store2，在Store2及后续写入操作被刷出前，保证Load1要读取的数据被读取完毕。
+      * StoreLoad屏障： 对于这样的语句Store1; StoreLoad; Load2，在Load2及后续所有读取操作执行前，保证Store1的写入对所有处理器可见。
+      * JVM的实现会在volatile读写前后均加上内存屏障，在一定程度上保证有序性。如下所示：
+        * LoadLoadBarrier -> volatile 读操作 -> LoadStoreBarrier
+        * StoreStoreBarrier -> volatile 写操作 -> StoreLoadBarrier
+      
+  * SYNCHRONIZED,REENTRANTLOCK的区别  
+    * 便利性：很明显Synchronized的使用比较方便简洁，并且由编译器去保证锁的加锁和释放，而ReenTrantLock需要手工声明来加锁和释放锁，为了避免忘记手工释放锁造成死锁，所以最好在finally中声明释放锁。
+    * 锁的细粒度和灵活度：很明显ReenTrantLock优于Synchronized
+    * ReenTrantLock独有的能力：
+      1.ReenTrantLock可以指定是公平锁还是非公平锁。而synchronized只能是非公平锁。所谓的公平锁就是先等待的线程先获得锁。
+      2.ReenTrantLock提供了一个Condition（条件）类，用来实现分组唤醒需要唤醒的线程们，而不是像synchronized要么随机唤醒一个线程要么唤醒全部线程。
+      Stringbuilder3.ReenTrantLock提供了一种能够中断等待锁的线程的机制，通过lock.lockInterruptibly()来实现这个机制。  
+
+
 
 
 
