@@ -1,9 +1,17 @@
 package day.day.up.questions.concurrency.antFiance;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.util.List;
 
 public class Solution{
     private volatile boolean isOneTurn;
+    @Value("#{'$exception.country.list}'.split(',')}")
+    private  List<String> exceptionCountryList;
+    @Value("${limited.coins.list:}")
+    private  String limitedCoins;
+
     Object lock;
     public Solution(){
         isOneTurn = true;
