@@ -751,7 +751,38 @@
            protected Object clone() throws CloneNotSupportedException {
                return super.clone();
            }
-       ````
+        ````
+    * 深拷贝:在对引用数据类型进行拷贝的时候，创建了一个新的对象，并且复制其内的成员变量。
+      * 重写clone()方法:要将类中所有自定义引用变量的类也去实现Cloneable接口实现clone()方法。对于字符类可以创建一个新的字符串实现拷贝。
+      * 序列法：自定义的类需要实现Serializable接口。在需要深拷贝的类(Son)中定义一个函数返回该类对象
+        ````
+          protected Son deepClone() throws IOException, ClassNotFoundException {
+            Son son=null;
+            //在内存中创建一个字节数组缓冲区，所有发送到输出流的数据保存在该字节数组中
+            //默认创建一个大小为32的缓冲区
+            ByteArrayOutputStream byOut=new ByteArrayOutputStream();
+            //对象的序列化输出
+            ObjectOutputStream outputStream=new ObjectOutputStream(byOut);//通过字节数组的方式进行传输
+            outputStream.writeObject(this);  //将当前student对象写入字节数组中
+
+            //在内存中创建一个字节数组缓冲区，从输入流读取的数据保存在该字节数组缓冲区
+            ByteArrayInputStream byIn=new ByteArrayInputStream(byOut.toByteArray()); //接收字节数组作为参数进行创建
+            ObjectInputStream inputStream=new ObjectInputStream(byIn);
+            son=(Son) inputStream.readObject(); //从字节数组中读取
+            return  son;
+          }
+        ````
+        
+* jave IO：https://zhuanlan.zhihu.com/p/292151192
+  * 主要分类
+    * 按数据流的方向：输入流、输出流
+    * 按处理数据单位：字节流、字符流，
+      1. 字节流一般用来处理图像、视频、音频、PPT、Word等类型的文件。字符流一般用于处理纯文本类型的文件。
+      2. 字节流本身没有缓冲区，缓冲字节流相对于字节流，效率提升非常高。而字符流本身就带有缓冲区。
+    * 按功能：节点流、处理流
+      1. 节点流：直接操作数据读写的流类，比如FileInputStream
+      2. 处理流：对一个已存在的流的链接和封装，通过对数据进行处理为程序提供功能强大、灵活的读写功能，例如BufferedInputStream（缓冲字节流）
+         ![Alt text](./images/inputStream.png?raw=true)
 
 
 
