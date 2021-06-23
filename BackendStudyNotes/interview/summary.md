@@ -783,6 +783,16 @@
       1. 节点流：直接操作数据读写的流类，比如FileInputStream
       2. 处理流：对一个已存在的流的链接和封装，通过对数据进行处理为程序提供功能强大、灵活的读写功能，例如BufferedInputStream（缓冲字节流）
          ![Alt text](./images/inputStream.png?raw=true)
+         * 在诸多处理流中，有一个非常重要，那就是缓冲流.我们知道，程序与磁盘的交互相对于内存运算是很慢的，容易成为程序的性能瓶颈。减少程序与磁盘的交互，是提升程序效率一种有效手段。缓冲流，就应用这种思路：普通流每次读写一个字节，而缓冲流在内存中设置一个缓存区，缓冲区先存储足够的待操作数据后，再与内存或磁盘进行交互。这样，在总数据量不变的情况下，通过提高每次交互的数据量，减少了交互次数。
+         
+* Java NIO：https://zhuanlan.zhihu.com/p/369062109
+  * Java NIO（New IO/Non-blocking IO）是从 Java 1.4 版本开始引入的一个新的 IO API，可以替代标准的 Java IO API。NIO 与原来的 IO 有同样的作用和目的，但是使用方式完全不同，NIO 支持面向缓冲区的、基于通道的 IO 操作。NIO 将以更加高效的方式进行文件的读写操作。
+  * NIO 与 IO 的区别
+    * IO：阻塞IO，面向流
+      ![Alt text](./images/io.png?raw=true)
+    * NIO: 非阻塞I，面向缓冲区，选择器   
+      ![Alt text](./images/nio.png?raw=true)
+
 
 
 
