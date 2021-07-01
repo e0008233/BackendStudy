@@ -28,3 +28,9 @@
 帅气的面试官您好，首先我们的项目DB遇到了瓶颈，特别是秒杀和热点数据这样的场景DB基本上就扛不住了，那就需要缓存中间件的加入了，目前市面上有的缓存中间件有 Redis 和 Memcached ，他们的优缺点……，综合这些然后再结合我们项目特点，最后我们在技术选型的时候选了谁。
 如果你这样有条不紊，有理有据的回答了我的问题而且还说出这么多我问题外的知识点，我会觉得你不只是一个会写代码的人，你逻辑清晰，你对技术选型，对中间件对项目都有自己的理解和思考，说白了就是你的offer有戏了。
 
+My career is divided into 2 parts exploration & continuous improvement. I graduated from NUS in 2010 with a degree in computer engineering. University to me is a great opportunity. It has opened my mind, and i was able to explore my interests in different industries. I have done the internship in banking industry with the bank of American Merrill Lynch. I was working as a research assistant for temasek lab on drone automations. I also did internship for technical companies like Hua wei and Yitu. With all that, upon graduation, I decided to join Visa as a software engineer as I would like something concrete which gave me a sense of satisfaction. 
+In visa, I was working on a promotion platform which serves the business owner to publicise their products and business. As it is a b2b model, in terms of traffic, it is a small project. So I joined mozat in January to expand my technology stack. 
+In mozat, I was working on a live steaming app. We utilised java 8, mybatis, redis, rabbit mq. microservices rpc to support our application. 
+
+Industry -> company -> job
+Industry (e-commence) has a great potential, a great platform for me to create an impact. The job itself match my capabilities. 
