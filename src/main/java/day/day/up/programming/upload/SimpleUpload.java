@@ -21,9 +21,9 @@ public class SimpleUpload {
     public static void upload(){
         String csvFilePath ="/Users/zhang/Desktop/input.csv";
 
-        String jdbcURL= "";
-        String username="";
-        String password="";
+        String jdbcURL = "";
+        String username = "";
+        String password = "";
         String sql = "";
 
         int choice = 3;
@@ -66,7 +66,7 @@ public class SimpleUpload {
 
                 statement.setInt(1, userId);
                 statement.setInt(2, remainingSalary);
-                statement.setString(3, "5-2021");
+                statement.setString(3, "6-2021-upload");
 
                 count++;
                 statement.addBatch();

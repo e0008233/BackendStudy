@@ -69,10 +69,10 @@ public class Application {
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
 
         // 1 july sbcm
-//        SimpleUpload.upload();
-            Solution solution = new Solution();
-
-        solution.test();
+        SimpleUpload.upload();
+//            Solution solution = new Solution();
+//
+//        solution.test();
 //        System.out.println(solution.buildTree(new int[]{1,2,3},new int[]{3,2,1}));
 
 //        MyThread thread1 = new MyThread("Thread1");
