@@ -968,7 +968,23 @@
       * 缓存因为某些原因，删除失败 -> 把删除失败的key放到消息队列 -> 消费消息队列的消息，获取要删除的key -> 重试删除缓存操作
     * 如果需要强一致性：Read-Through/Write-Through（读写穿透:服务端把缓存作为主要数据存储。应用程序跟数据库缓存交互，都是通过抽象缓存层完成的。
     
-    
+* 网络安全
+  * SQL 注入
+  * 目录遍历攻击
+    * 目录遍历攻击又称目录穿越、恶意浏览、文件泄露等，攻击者利用系统漏洞访问合法应用之外的数据或文件目录，导致数据泄露或被篡改。
+    * 例如：Cookie: TEMPLATE=../../../../../../../../../etc/passwd  
+    * 防御手段：
+      1. 程序应当设置一个“文档根节点”，以这个确信的、标准化的路径为基准，来确定一个最顶层的目录路径N。并且规定在该目录上层的所有目录或文件不可访问。
+      2. 当确实需要提供一个操作文件或目录的URI请求服务时，在访问文件时先生成完整的文件路径（如果相应参数存在的话），并且将路径内的所有的字符都标准化 防止编码（举例来说，将%20转换成空格）
+      3. 给用户提供I，路径存储在数据库
+  * CSRF（Cross Site Request Forgery）：攻击者（黑客，钓鱼网站）盗用了你的身份，以你的名义发送恶意请求
+    * 防御手段：
+      1. 验证HTTP Referer字段, 根据HTTP协议，在HTTP头部中有一个Referer字段，它记录了该HTTP请求所在的地址，表示HTTP请求从那个页面发出的
+         比如当你访问 http://zhifubao.com/withdraw?account=lyq&amount=10000&for=xxx ，用户必须先登录支付宝网站，然后通过点击页面的的按钮来触发转账事件。此时，转账请求的Referer值就是转账页面所在的URL，通常是以zhifubao.com域名开头的地址。如果攻击者要实行CSRF攻击，那么他只能在自己的站点构造请求，此时Referer的值就指向黑客自己的网站  
+      2. 验证码:强制用户必须与应用进行交互，才能完成最终请求
+      3. 添加token验证:要防止CSRF，关键在于在请求中放入黑客所不能伪造的信息，并且该信息不存在于cookie之中  
+         Generally, CSRF happens when a browser automatically adds headers (i.e: Session ID within a Cookie), and then made the session authenticated. Bearer tokens, or other HTTP header based tokens that need to be added manually, would prevent you from CSRF.
+         
     
     
 
