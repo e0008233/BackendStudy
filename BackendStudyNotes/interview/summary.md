@@ -1003,6 +1003,7 @@ mysql cpu memory networks
 本地缓存与远程内存的使用
 要对业务的变化进行关注，是否会导致数据增多影响原有性能
 
+https://www.cnblogs.com/chiangchou/p/jvm-4.html
 
       
 
