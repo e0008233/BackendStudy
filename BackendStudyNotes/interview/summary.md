@@ -985,8 +985,18 @@
       3. 添加token验证:要防止CSRF，关键在于在请求中放入黑客所不能伪造的信息，并且该信息不存在于cookie之中  
          Generally, CSRF happens when a browser automatically adds headers (i.e: Session ID within a Cookie), and then made the session authenticated. Bearer tokens, or other HTTP header based tokens that need to be added manually, would prevent you from CSRF.
          
-    
-    
+
+
+mysql cpu memory networks 
+  timeout: 轻量化 快速失败 
+  降级 服务熔断 
+
+读写分离
+字典类型24小时缓存
+相关bs库的缓存
+本地缓存与远程内存的使用
+要对业务的变化进行关注，是否会导致数据增多影响原有性能
+
 
       
 

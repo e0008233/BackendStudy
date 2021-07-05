@@ -8,7 +8,7 @@ import day.day.up.programming.jdbc.Database3;
 import day.day.up.programming.lock.Test;
 import day.day.up.programming.upload.ComplexCsv2DbInserter;
 import day.day.up.programming.upload.SimpleUpload;
-import day.day.up.questions.concurrency.antFiance.Solution;
+import day.day.up.questions.algorithms.Solution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -69,11 +69,11 @@ public class Application {
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
 
         // 1 july sbcm
-        SimpleUpload.upload();
-//            Solution solution = new Solution();
+//        SimpleUpload.upload();
+//        Solution solution = new Solution();
 //
 //        solution.test();
-//        System.out.println(solution.buildTree(new int[]{1,2,3},new int[]{3,2,1}));
+        System.out.println(Solution.findShortestLength(new int[]{1, 3, 4, 3, 9, 1},8));
 
 //        MyThread thread1 = new MyThread("Thread1");
 //        Thread t1 = new Thread(thread1);
