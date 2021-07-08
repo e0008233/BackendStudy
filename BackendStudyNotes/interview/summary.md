@@ -121,6 +121,40 @@
        1. prepareStatement可以替换变量,在SQL语句中可以包含"?" 可以用set方法替换
        2. PreparedStatement有预编译的过程，已经绑定sql，之后无论执行多少遍，都不会再去进行编译，而 statement 不同，如果执行多变，则相应的就要编译多少遍sql，所以从这点看，preStatement 的效率会比 Statement要高一些.
        3. preStatement是预编译的，所以可以有效的防止 SQL注入等问题
+    * binlog、redo log和undo log
+       * binlog: 用于记录数据库执行的写入性操作(不包括查询)信息，以二进制的形式保存在磁盘中。
+          * binlog使用场景
+            1. 主从复制：在Master端开启binlog，然后将binlog发送到各个Slave端，Slave端重放binlog从而达到主从数据一致。
+            2. 数据恢复：通过使用mysqlbinlog工具来恢复数据。
+         * binlog刷盘时机:对于InnoDB存储引擎而言，只有在事务提交时才会记录biglog，此时记录还在内存中，那么biglog是什么时候刷到磁盘中的呢？mysql通过sync_binlog参数控制biglog的刷盘时机，取值范围是0-N：
+            * 0：不去强制要求，由系统自行判断何时写入磁盘；
+            * 1：每次commit的时候都要将binlog写入磁盘；
+            * N：每N个事务，才会将binlog写入磁盘。
+         * redo log
+            * 为什么要redo log：我们都知道，事务的四大特性里面有一个是持久性，具体来说就是只要事务提交成功，那么对数据库做的修改就被永久保存下来了，不可能因为任何原因再回到原来的状态。那么mysql是如何保证一致性的呢？最简单的做法是在每次事务提交的时候，将该事务涉及修改的数据页全部刷新到磁盘中。但是这么做会有严重的性能问题，主要体现在两个方面：
+              1. 因为Innodb是以页为单位进行磁盘交互的，而一个事务很可能只修改一个数据页里面的几个字节，这个时候将完整的数据页刷到磁盘的话，太浪费资源了！
+              2. 一个事务可能涉及修改多个数据页，并且这些数据页在物理上并不连续，使用随机IO写入性能太差！
+              * 因此mysql设计了redo log，具体来说就是只记录事务对数据页做了哪些修改，这样就能完美地解决性能问题了(相对而言文件更小并且是顺序IO)。
+         * undo log
+            * 数据库事务四大特性中有一个是原子性，具体来说就是 原子性是指对数据库的一系列操作，要么全部成功，要么全部失败，不可能出现部分成功的情况。
+            * 实际上，原子性底层就是通过undo log实现的。undo log主要记录了数据的逻辑变化，比如一条INSERT语句，对应一条DELETE的undo log，对于每个UPDATE语句，对应一条相反的UPDATE的undo log，这样在发生错误时，就能回滚到事务之前的数据状态
+         * bin log 和 redo log 区别
+            1. binlog是server层实现的，意味着所有引擎都可以使用binlog日志,redo log是innodb引擎层实现的，并不是所有引擎都有
+            2. redo log的大小是固定的，日志上的记录修改落盘后，日志会被覆盖掉，无法用于数据回滚/数据恢复等操作。
+            3. binlog通过追加的方式写入的，可通过配置参数max_binlog_size设置每个binlog文件的大小，当文件大小大于给定值后，日志会发生滚动，之后的日志记录到新的文件上。
+   * Mysql 两段式提交
+       ![Alt text](./images/mysql.png?raw=true)
+       1. 执行器调用存储引擎接口，存储引擎将修改更新到内存中后，将修改操作写到redo log里面，此时redo log处于prepare状态；
+       2. 存储引擎告知执行器执行完毕，执行器开始将操作写入到bin log中，写完后调用存储引擎的接口提交事务；
+       3. 存储引擎将redo log的状态置为commit。
+       * 两阶段提交机制的必要性
+         * binlog 存在于Mysql Server层中，主要用于数据恢复；当数据被误删时，可以通过上一次的全量备份数据加上某段时间的binlog将数据恢复到指定的某个时间点的数据。
+         * redo log 存在于InnoDB 引擎中，InnoDB引擎是以插件形式引入Mysql的，redo log的引入主要是为了实现Mysql的crash-safe能力。
+         * 假设redo log和binlog分别提交，可能会造成用日志恢复出来的数据和原来数据不一致的情况。
+           1. 假设先写redo log再写binlog，即redo log没有prepare阶段，写完直接置为commit状态，然后再写binlog。那么如果写完redo log后Mysql宕机了，重启后系统自动用redo log 恢复出来的数据就会比 binlog记录的数据多出一些数据，这就会造成磁盘上数据库数据页和binlog的不一致，下次需要用到binlog恢复误删的数据时，就会发现恢复后的数据和原来的数据不一致。
+           2. 假设先写binlog再写redolog。如果写完redo log后Mysql宕机了，那么binlog上的记录就会比磁盘上数据页的记录多出一些数据出来，下次用binlog恢复数据，就会发现恢复后的数据和原来的数据不一致。
+         * 由此可见，redo log和binlog的两阶段提交是非常必要的。
+
 
 * 限流限速
     * 算法分类
