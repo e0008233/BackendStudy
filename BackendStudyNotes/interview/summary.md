@@ -1097,6 +1097,17 @@
       3. 添加token验证:要防止CSRF，关键在于在请求中放入黑客所不能伪造的信息，并且该信息不存在于cookie之中  
          Generally, CSRF happens when a browser automatically adds headers (i.e: Session ID within a Cookie), and then made the session authenticated. Bearer tokens, or other HTTP header based tokens that need to be added manually, would prevent you from CSRF.
          
+* JIT
+  * JIT 是 just in time 的缩写, 也就是即时编译器，是Java运行时环境的一个组件，通过在运行时将字节码编译为本机机器代码来提高 Java™ 应用程序的性能
+  * 之所以出现JIT是因为填补Java在跨平台特性下的性能问题。我们知道运行一个java程序，首先要把源码编译成字节码，然后由虚拟机把字节码解释成对应的机器指令，交由底层OS去执行。这里相对于C/C++静态编译后直接运行的程序天然就存在两个性能上的缺陷：
+    1、要解释字节码 2、一个方法重复解释。
+  * JIT简单来说就是把程序中运行的热点代码的字节码编译为本地机器代码，编译完成之后再执行这段代码时直接运行编译好机器代码，无须再次解释
+  * 对于每个方法，JVM 都会保留一个调用计数，以预定义的编译阈值开始，并在每次调用方法时递减。当调用计数达到零时，将触发方法的即时编译。编译阈值通过-XX:CompileThreshold=Nflag指定。client模式下默认是1500，server模式默认是10000.
+  * 解释器的执行，抽象的看是这样的： 输入的代码 -> [ 解释器 解释执行 ] -> 执行结果
+  * 而要JIT编译然后再执行的话，抽象的看则是： 输入的代码 -> [ 编译器 编译 ] -> 编译后的代码 -> [ 执行 ] -> 执行结果  
+    
+JNI：
+  * A native method is a Java method whose implementation is provided by non-java code
 
 
 mysql cpu memory networks 
