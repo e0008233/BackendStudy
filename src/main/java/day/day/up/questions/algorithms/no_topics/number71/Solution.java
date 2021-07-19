@@ -1,37 +1,37 @@
 package day.day.up.questions.algorithms.no_topics.number71;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 
 //https://cloud.tencent.com/developer/article/1660069
 public class Solution {
-    public int leastInterval(char[] tasks, int n) {
-        HashMap<Character,Integer> count = new HashMap<>();
-        int maxCount = 0;
-        int sameMax = 0;
+    public String simplifyPath(String path) {
+        String[] paths = path.split("/");
+        List<String> directories = new ArrayList<>();
 
-        for (char curr: tasks){
-            if (count.containsKey(curr)){
-                count.put(curr,count.get(curr)+1);
-
+        for (String directory:paths){
+            if (directory.equals("")) continue;
+            if (directory.equals(".")) continue;
+            else if (directory.equals("..")){
+                if (directories.isEmpty()) continue;
+                else directories.remove(directories.size()-1);
             }
             else{
-                count.put(curr,1);
-            }
-
-            if (count.get(curr)>maxCount) maxCount = count.get(curr);
-
-        }
-        for (Character key:count.keySet()){
-            if (count.get(key)==maxCount) {
-                sameMax ++;
+                directories.add(directory);
             }
         }
 
-        int total = (maxCount-1)*(n+1)+sameMax;
+        String ans="";
+        if (directories.isEmpty()) return "/";
 
+        for (int i=0;i<directories.size();i++){
+            ans = ans+"/"+directories.get(i);
+        }
 
-        return Math.max(tasks.length,total);
+        return ans;
     }
 }
