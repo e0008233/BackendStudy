@@ -67,6 +67,10 @@ Strength (Elaborate with a good story)
 •	independent & resilient
 •	Passionate and interested
 
+靠谱 Reliable 
+* 做事放心
+* 做人良心
+* 相处放心
 
 Weakness
 •	public speech/Do not speak too much---science and engineering background, not enough attention and practice, lack of experience, causing this problem, good at analytics and logical reasoning, not so good at giving a speech. This is quite important, I am taking courses to improve on it, and take all the presentation opportunities to practice. 
