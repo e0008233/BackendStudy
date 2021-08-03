@@ -24,6 +24,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 // Interesting question: number32(parentheses), number 84
 
 @SpringBootApplication
@@ -69,13 +70,15 @@ public class Application {
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
 
         // 1 july sbcm
-//        SimpleUpload.upload();
-        Solution solution = new Solution();
+        SimpleUpload.upload();
+//        Solution solution = new Solution();
 //
 //        solution.test();
 
-        System.out.println(solution.isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
-
+//        System.out.println(solution.test());
+//        Thread.sleep(10000);
+//
+//        System.out.println("222222");
 //        MyThread thread1 = new MyThread("Thread1");
 //        Thread t1 = new Thread(thread1);
 //

@@ -3,6 +3,7 @@ package day.day.up.questions.algorithms.topics.data_structure.graph.number785;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.Callable;
 
 public class Solution {
     public boolean isBipartite(int[][] graph) {
@@ -37,5 +38,16 @@ public class Solution {
         }
 
         return true;
+    }
+
+    public Callable<String> test(){
+        Callable<String> data = (() -> {
+            System.out.println("hahaha");
+
+            return "hahha";
+        });
+
+        return data;
+
     }
 }
