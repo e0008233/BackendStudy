@@ -47,6 +47,7 @@ public class SimpleUpload {
             System.out.println("Connection success");
             PreparedStatement statement = connection.prepareStatement(sql);
 
+            
             beanReader = new CsvBeanReader(new FileReader(csvFilePath), CsvPreference.STANDARD_PREFERENCE);
 //            beanReader.getHeader(false);
             SbcmSalary bean = null;
