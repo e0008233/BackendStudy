@@ -70,7 +70,7 @@ public class Application {
 //        int endTime = (int)currentDate.atStartOfDay(ZoneId.of(zone)).toEpochSecond();
 
         // 1 july sbcm
-        SimpleUpload.upload();
+//        SimpleUpload.upload();
 //        Solution solution = new Solution();
 //
 //        solution.test();
@@ -99,6 +99,8 @@ public class Application {
 //        }
 //        Database3.updateDatabase(path,choice);
 //        SpringApplication.run(Application.class, args);
+        String res = putBracketSecondLine("عرض البث الخاص بك في( علامة مشهور) لمدة ( 1 ساعة )");
+        System.out.println(res);
 
 
     }
@@ -117,5 +119,17 @@ public class Application {
 //
 //        };
 //    }
+private static  String putBracketSecondLine(String input){
+    int start = input.indexOf("(");
+    int end = input.lastIndexOf(")");
+    if (start==-1 || end ==-1){
+        return input;
+    }
+    String firstLine = "";
+    if (start!=0) firstLine = input.substring(0,start);
+    if (end!=input.length()-1) firstLine = firstLine + input.substring(end+1,input.length());
+    String secondLine =  input.substring(start,end+1);
+    return firstLine + "\n" +  secondLine;
+}
 
 }
